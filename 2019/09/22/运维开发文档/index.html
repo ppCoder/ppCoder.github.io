@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="##SSH远程登录 ssh -p 22 root@111.111.111.111 服务器安全白名单：/etc/hosts.allow 黑名单：/etc/hosts.deny 多次登录失败加入黑名单脚本 1234567891011121314151617181920#脚本来源：https://www.cnblogs.com/panblack/p/secure_ssh_auto_block.html#">
+<meta name="description" content="##SSH远程登录 ssh -p 22 root@111.111.111.111 === 菜志杰大沙🦅 === 服务器安全白名单：/etc/hosts.allow 黑名单：/etc/hosts.deny Sshd:xxx.xxx.xxx.xxx:deny 多次登录失败加入黑名单脚本 1234567891011121314151617181920#脚本来源：https://www.cnblogs.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ssh安全中的一些要点">
 <meta property="og:url" content="http://yoursite.com/2019/09/22/运维开发文档/index.html">
 <meta property="og:site_name" content="Yun">
-<meta property="og:description" content="##SSH远程登录 ssh -p 22 root@111.111.111.111 服务器安全白名单：/etc/hosts.allow 黑名单：/etc/hosts.deny 多次登录失败加入黑名单脚本 1234567891011121314151617181920#脚本来源：https://www.cnblogs.com/panblack/p/secure_ssh_auto_block.html#">
+<meta property="og:description" content="##SSH远程登录 ssh -p 22 root@111.111.111.111 === 菜志杰大沙🦅 === 服务器安全白名单：/etc/hosts.allow 黑名单：/etc/hosts.deny Sshd:xxx.xxx.xxx.xxx:deny 多次登录失败加入黑名单脚本 1234567891011121314151617181920#脚本来源：https://www.cnblogs.">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-09-22T15:18:18.963Z">
+<meta property="og:updated_time" content="2019-09-23T14:43:21.297Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ssh安全中的一些要点">
-<meta name="twitter:description" content="##SSH远程登录 ssh -p 22 root@111.111.111.111 服务器安全白名单：/etc/hosts.allow 黑名单：/etc/hosts.deny 多次登录失败加入黑名单脚本 1234567891011121314151617181920#脚本来源：https://www.cnblogs.com/panblack/p/secure_ssh_auto_block.html#">
+<meta name="twitter:description" content="##SSH远程登录 ssh -p 22 root@111.111.111.111 === 菜志杰大沙🦅 === 服务器安全白名单：/etc/hosts.allow 黑名单：/etc/hosts.deny Sshd:xxx.xxx.xxx.xxx:deny 多次登录失败加入黑名单脚本 1234567891011121314151617181920#脚本来源：https://www.cnblogs.">
 
 
 
@@ -311,8 +311,10 @@
       
         <p>##SSH远程登录</p>
 <p>ssh -p 22 <a href="mailto:root@111.111.111.111" target="_blank" rel="noopener">root@111.111.111.111</a></p>
+<p>=== 菜志杰大沙🦅 ===</p>
 <h2 id="服务器安全"><a href="#服务器安全" class="headerlink" title="服务器安全"></a>服务器安全</h2><p>白名单：/etc/hosts.allow</p>
 <p>黑名单：/etc/hosts.deny</p>
+<p>Sshd:xxx.xxx.xxx.xxx:deny</p>
 <p>多次登录失败加入黑名单脚本</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#脚本来源：https://www.cnblogs.com/panblack/p/secure_ssh_auto_block.html</span><br><span class="line"></span><br><span class="line">#脚本地址：/usr/local/bin/secure_ssh.sh</span><br><span class="line">#! /bin/bash</span><br><span class="line">cat /var/log/secure|awk &apos;/Failed/&#123;print $(NF-3)&#125;&apos;|sort|uniq -c|awk &apos;&#123;print $2&quot;=&quot;$1;&#125;&apos; &gt; /usr/local/bin/black.list</span><br><span class="line">for i in `cat  /usr/local/bin/black.list`</span><br><span class="line">do</span><br><span class="line">  IP=`echo $i |awk -F= &apos;&#123;print $1&#125;&apos;`</span><br><span class="line">  NUM=`echo $i|awk -F= &apos;&#123;print $2&#125;&apos;`</span><br><span class="line">  if [ $&#123;#NUM&#125; -gt 1 ]; then</span><br><span class="line">    grep $IP /etc/hosts.deny &gt; /dev/null</span><br><span class="line">    if [ $? -gt 0 ];then</span><br><span class="line">      echo &quot;sshd:$IP:deny&quot; &gt;&gt; /etc/hosts.deny</span><br><span class="line">    fi</span><br><span class="line">  fi</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">#定时执行</span><br><span class="line"># crontab -e</span><br><span class="line">*/1 * * * *  sh /usr/local/bin/secure_ssh.sh</span><br></pre></td></tr></table></figure>
 
