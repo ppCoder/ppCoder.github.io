@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.搭建服务  实现增删改查    将操作记录保存到库中  处理异常：少用异常  日志分类  保存操作记录切面保存操作记录 规范化返回信息 12345678910111213141516171819202122//返回结果工具类public class ResultUtil &amp;#123;    public static Result success(Object object)&amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yun">
+<meta property="og:url" content="http://yoursite.com/2019/09/24/SingleServiceDemo/index.html">
+<meta property="og:site_name" content="Yun">
+<meta property="og:description" content="1.搭建服务  实现增删改查    将操作记录保存到库中  处理异常：少用异常  日志分类  保存操作记录切面保存操作记录 规范化返回信息 12345678910111213141516171819202122//返回结果工具类public class ResultUtil &amp;#123;    public static Result success(Object object)&amp;#123;">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://image-static.segmentfault.com/411/861/4118619330-5a05577c2d32f">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/6751690-0dbb4c73b2761208.png?imageMogr2/auto-orient/">
+<meta property="og:updated_time" content="2019-09-24T14:44:20.344Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Yun">
+<meta name="twitter:description" content="1.搭建服务  实现增删改查    将操作记录保存到库中  处理异常：少用异常  日志分类  保存操作记录切面保存操作记录 规范化返回信息 12345678910111213141516171819202122//返回结果工具类public class ResultUtil &amp;#123;    public static Result success(Object object)&amp;#123;">
+<meta name="twitter:image" content="https://image-static.segmentfault.com/411/861/4118619330-5a05577c2d32f">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/24/SingleServiceDemo/">
+
+
+
+
+
+  <title> | Yun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Code and Love.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/24/SingleServiceDemo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PPCoder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-24T22:44:20+08:00">
+                2019-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-搭建服务"><a href="#1-搭建服务" class="headerlink" title="1.搭建服务"></a>1.搭建服务</h2><ul>
+<li><input checked disabled type="checkbox"> 实现增删改查</li>
+</ul>
+<ul>
+<li><input checked disabled type="checkbox"> 将操作记录保存到库中</li>
+<li><input checked disabled type="checkbox"> 处理异常：少用异常</li>
+<li><input checked disabled type="checkbox"> 日志分类</li>
+</ul>
+<h3 id="保存操作记录"><a href="#保存操作记录" class="headerlink" title="保存操作记录"></a>保存操作记录</h3><p>切面保存操作记录</p>
+<p>规范化返回信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回结果工具类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ResultUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Result <span class="title">success</span><span class="params">(Object object)</span></span>&#123;</span><br><span class="line">        Result result = <span class="keyword">new</span> Result();</span><br><span class="line">        result.setCode(<span class="number">0</span>);</span><br><span class="line">        result.setMsg(<span class="string">"成功"</span>);</span><br><span class="line">        result.setData(object);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Result <span class="title">success</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> success(<span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Result <span class="title">error</span><span class="params">(Integer code,String msg)</span></span>&#123;</span><br><span class="line">        Result result = <span class="keyword">new</span> Result();</span><br><span class="line">        result.setCode(code);</span><br><span class="line">        result.setMsg(msg);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//返回格式</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Result</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//错误码</span></span><br><span class="line">    <span class="keyword">private</span> Integer code;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//提示信息</span></span><br><span class="line">    <span class="keyword">private</span> String msg;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//具体的内容</span></span><br><span class="line">    <span class="keyword">private</span> T data;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//枚举格式</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> ResultEnum &#123;</span><br><span class="line">    UNKNOW_ERROR(-<span class="number">1</span>,<span class="string">"未知错误"</span>),</span><br><span class="line">    SUCCESS(<span class="number">0</span>,<span class="string">"成功"</span>),</span><br><span class="line">    PRIMARY_SCHOOL(<span class="number">100</span>,<span class="string">"xx"</span>),</span><br><span class="line">    MIDDLE_SCHOOL(<span class="number">101</span>,<span class="string">"xxx"</span>),</span><br><span class="line">    ;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span>  Integer code;</span><br><span class="line">    <span class="keyword">private</span> String msg;</span><br><span class="line"></span><br><span class="line">    ResultEnum(Integer code, String msg) &#123;</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">        <span class="keyword">this</span>.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> msg;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h3 id="异常处理："><a href="#异常处理：" class="headerlink" title="异常处理："></a>异常处理：</h3><blockquote>
+<p>try-catch：捕获异常</p>
+<p>throws：抛出异常到上层</p>
+</blockquote>
+<p><img src="https://image-static.segmentfault.com/411/861/4118619330-5a05577c2d32f" alt="img"></p>
+<p>异常捕获规范：不要在业务代码中捕获异常，将业务层的所有异常全部抛出到上层，我们只需要用AOP对Controller层的所有方法处理即可</p>
+<p>默认异常处理：/error</p>
+<p>单个异常处理</p>
+<p>全局异常处理</p>
+<ul>
+<li><p>自定义error属性</p>
+<blockquote>
+<p>simply add a bean of type <code>ErrorAttributes</code> to use the existing mechanism but replace the contents</p>
+</blockquote>
+</li>
+<li><p>自定义errorController</p>
+<blockquote>
+<p>To do that just extend <code>BasicErrorController</code> and add a public method with a <code>@RequestMapping</code> that has a <code>produces</code> attribute, and create a bean of your new type.</p>
+</blockquote>
+</li>
+<li><p>自定义ControllerAdvice</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自定义异常</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Integer code;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//参数可以改为枚举类型</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MyException</span><span class="params">(Integer code,String message)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//父类的构造方法本身会传message进去</span></span><br><span class="line">        <span class="keyword">super</span>(message);</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">getCode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> code;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setCode</span><span class="params">(Integer code)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.code = code;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自定义error属性</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomErrorAttributes</span> <span class="keyword">implements</span> <span class="title">ErrorAttributes</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title">getErrorAttributes</span><span class="params">(RequestAttributes requestAttributes, <span class="keyword">boolean</span> includeStackTrace)</span> </span>&#123;</span><br><span class="line">    Map&lt;String, Object&gt; result = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">    result.put(<span class="string">"timestamp"</span>, System.currentTimeMillis());</span><br><span class="line">    result.put(<span class="string">"error"</span>, <span class="string">"customized error"</span>);</span><br><span class="line">    result.put(<span class="string">"path"</span>, <span class="string">"customized path"</span>);</span><br><span class="line">    result.put(<span class="string">"status"</span>, <span class="number">100</span>);</span><br><span class="line">    result.put(<span class="string">"exception"</span>, <span class="string">"customized exception"</span>);</span><br><span class="line">    result.put(<span class="string">"message"</span>, <span class="string">"customized message"</span>);</span><br><span class="line">    result.put(<span class="string">"trace"</span>, <span class="string">"customized trace"</span>);</span><br><span class="line">    result.put(<span class="string">"add-attribute"</span>, <span class="string">"add-attribute"</span>);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Throwable <span class="title">getError</span><span class="params">(RequestAttributes requestAttributes)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">GlobalExceptionHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*应用到所有@RequestMapping注解方法，在其执行之前初始化数据绑定器</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@InitBinder</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initWebBinder</span><span class="params">(WebDataBinder binder)</span></span>&#123;</span><br><span class="line">        <span class="comment">//对日期的统一处理</span></span><br><span class="line">        binder.addCustomFormatter(<span class="keyword">new</span> DateFormatter(<span class="string">"yyyy-MM-dd"</span>));</span><br><span class="line">        <span class="comment">//添加对数据的校验</span></span><br><span class="line">        <span class="comment">//binder.setValidator();</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 把值绑定到Model中，使全局@RequestMapping可以获取到该值</span></span><br><span class="line"><span class="comment">     * 在Controller中使用ModelMap以及@ModelAttribute()来获取值</span></span><br><span class="line"><span class="comment">     * 实例：用于将异常信息传给控制器，然后规范json格式</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ModelAttribute</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addAttribute</span><span class="params">(Model model)</span> </span>&#123;</span><br><span class="line">        model.addAttribute(<span class="string">"attribute"</span>,  <span class="string">"The Attribute"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> String DEFAULT_ERROR_VIEW = <span class="string">"error"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 全局异常捕获</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(value = Exception.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">defaultErrorHandler</span><span class="params">(HttpServletRequest req, Exception e)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        ModelAndView mav = <span class="keyword">new</span> ModelAndView();</span><br><span class="line">        mav.addObject(<span class="string">"exception"</span>, e);</span><br><span class="line">        mav.addObject(<span class="string">"url"</span>, req.getRequestURL());</span><br><span class="line">        mav.setViewName(DEFAULT_ERROR_VIEW);</span><br><span class="line">        <span class="keyword">return</span> mav;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 自定义异常捕获</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(value = MyException.class)<span class="comment">//拦截异常的类型，传入的参数可以时一个数组，同时处理多个异常</span></span><br><span class="line">    <span class="meta">@ResponseStatus</span>(HttpStatus.INTERNAL_SERVER_ERROR)<span class="comment">//自定义浏览器返回的状态码</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Response <span class="title">jsonErrorHandler</span><span class="params">(HttpServletRequest req, MyException e)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        Response r = <span class="keyword">new</span> Response();</span><br><span class="line">        r.setMsg(e.getMessage());<span class="comment">//消息内容</span></span><br><span class="line">        r.setCode(ErrorInfo.ERROR);<span class="comment">//消息类型</span></span><br><span class="line">        r.setData(<span class="string">"Some Data"</span>);<span class="comment">//请求返回的数据</span></span><br><span class="line">        <span class="keyword">return</span> r;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Springmvc的异常处理器</span></span><br><span class="line"><span class="comment">//不能使用两个ExceptionHandler去处理同一个异常</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="记录日志："><a href="#记录日志：" class="headerlink" title="记录日志："></a>记录日志：</h3><h4 id="SpringBoot中日志配置"><a href="#SpringBoot中日志配置" class="headerlink" title="SpringBoot中日志配置"></a>SpringBoot中日志配置</h4><h5 id="在项目中打印日志"><a href="#在项目中打印日志" class="headerlink" title="在项目中打印日志"></a>在项目中打印日志</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(XXX.class);</span><br></pre></td></tr></table></figure>
+
+<h5 id="将日志存储到文件"><a href="#将日志存储到文件" class="headerlink" title="将日志存储到文件"></a>将日志存储到文件</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">file:</span> <span class="string">log\springbootdemo.log//设置文件，相对路径+文件名</span></span><br><span class="line">	<span class="attr">path:</span> <span class="string">xxxx//设置目录，绝对路径或相对路径</span></span><br><span class="line">	<span class="string">//当file和path同时设置，只有file生效</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="设置日志级别"><a href="#设置日志级别" class="headerlink" title="设置日志级别"></a>设置日志级别</h5><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="attr">level:</span></span><br><span class="line">		<span class="string">root=WARN;</span></span><br><span class="line">		<span class="string">com.example=INFO;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="自定义日志配置"><a href="#自定义日志配置" class="headerlink" title="自定义日志配置"></a>自定义日志配置</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">logging:</span></span><br><span class="line">	<span class="string">config=classpath:logging-config.xml</span></span><br></pre></td></tr></table></figure>
+
+<p><code>configuration</code></p>
+<ul>
+<li><code>scan</code>：如果配置文件发生改变，将会被重新加载</li>
+<li><code>scanPeriod</code>：设置检测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认的单位是毫秒，默认时间1分钟</li>
+<li><code>debug</code>：打印出<code>logback</code>内部日志信息，实时查看<code>logback</code>运行状态</li>
+</ul>
+<p><code>contextName</code></p>
+<blockquote>
+<p>每个logger都关联到logger上下文，默认上下文名称为“default”。</p>
+<p>但可以使用<contextname>设置成其他名字，用于区分不同应用程序的记录。</contextname></p>
+<p>一旦设置，不能修改,可以通过<code>%contextName</code>来打印日志上下文名称。</p>
+</blockquote>
+<p><code>property</code>：定义变量值</p>
+<h5 id="appender：格式化日志输出节点"><a href="#appender：格式化日志输出节点" class="headerlink" title="appender：格式化日志输出节点"></a>appender：格式化日志输出节点</h5><ul>
+<li><p>class：指定哪种输出策略，常用的是控制台输出策略和文件输出策略</p>
+<p>–&gt; <code>ThresholdFilter</code>：系统定义拦截器，过滤ERROR级别以下的日志，</p>
+</li>
+</ul>
+<p><code>encoder</code>：对日志进行编码</p>
+<p><code>RollingFileAppender</code>：切分日志</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">RollingFile</span> <span class="attr">name</span>=<span class="string">"RollingFileInfo"</span> <span class="attr">fileName</span>=<span class="string">"$&#123;log_path&#125;/info.log"</span></span></span><br><span class="line"><span class="tag"><span class="attr">filePattern</span>=<span class="string">"$&#123;log_path&#125;/$$&#123;date:yyyy-MM&#125;/info-%d&#123;yyyy-MM-dd&#125;-%i.log.gz"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">Filters</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ThresholdFilter</span> <span class="attr">level</span>=<span class="string">"INFO"</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ThresholdFilter</span> <span class="attr">level</span>=<span class="string">"WARN"</span> <span class="attr">onMatch</span>=<span class="string">"DENY"</span></span></span><br><span class="line"><span class="tag">                                 <span class="attr">onMismatch</span>=<span class="string">"NEUTRAL"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Filters</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">PatternLayout</span> <span class="attr">pattern</span>=<span class="string">"[%d][%t][%p][%c:%L] %m%n"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">Policies</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 归档每天的文件 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">TimeBasedTriggeringPolicy</span> <span class="attr">interval</span>=<span class="string">"1"</span> <span class="attr">modulate</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 限制单个文件大小 --&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">SizeBasedTriggeringPolicy</span> <span class="attr">size</span>=<span class="string">"2 MB"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">Policies</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 限制每天文件个数 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">DefaultRolloverStrategy</span> <span class="attr">compressionLevel</span>=<span class="string">"0"</span> <span class="attr">max</span>=<span class="string">"10"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">RollingFile</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>fileNamePattern</code>：定义了日志的切分方式，把每一天的归档到一个文件夹中</p>
+<h5 id="root：指定最基础的日志级别"><a href="#root：指定最基础的日志级别" class="headerlink" title="root：指定最基础的日志级别"></a><code>root</code>：指定最基础的日志级别</h5><ul>
+<li>level：设置打印级别</li>
+</ul>
+<h5 id="loger：设置某个包或类的日志打印级别"><a href="#loger：设置某个包或类的日志打印级别" class="headerlink" title="loger：设置某个包或类的日志打印级别"></a><code>loger</code>：设置某个包或类的日志打印级别</h5><h3 id="事务回滚"><a href="#事务回滚" class="headerlink" title="事务回滚"></a>事务回滚</h3><p>1.业务层抛出异常，控制层处理</p>
+<p>2.当异常为<code>RuntimeException</code>时，才会开启回滚</p>
+<h2 id="2-nginx转发均衡"><a href="#2-nginx转发均衡" class="headerlink" title="2. nginx转发均衡"></a>2. nginx转发均衡</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">#服务器集群</span><br><span class="line">upstream message.com&#123;</span><br><span class="line">    #weight是权重</span><br><span class="line">    server 127.0.0.1:5757 weight=2;</span><br><span class="line">    server 156.2.3.1:7777 weight=1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#修改nginx配置文件，</span><br><span class="line">server &#123;</span><br><span class="line">	listen       8765;</span><br><span class="line">    server_name  localhost;</span><br><span class="line">    #charset koi8-r;</span><br><span class="line">    #access_log  logs/host.access.log  main;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        #root 静态资源文件存放位置</span><br><span class="line">        root   /home/work/chat/static;</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">        #当访问路径不存在该资源时，转发</span><br><span class="line">        if (!-e $request_filename) &#123;</span><br><span class="line">        	proxy_pass http:message.com;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>附加：通过一个域名访问不同的nginx服务器</p>
+<h2 id="3-postman调用接口"><a href="#3-postman调用接口" class="headerlink" title="3. postman调用接口"></a>3. postman调用接口</h2><h2 id="4-Druid监控"><a href="#4-Druid监控" class="headerlink" title="4. Druid监控"></a>4. Druid监控</h2><h4 id="4-1-Druid：数据库连接池"><a href="#4-1-Druid：数据库连接池" class="headerlink" title="4.1 Druid：数据库连接池"></a>4.1 Druid：数据库连接池</h4><h4 id="4-2-功能："><a href="#4-2-功能：" class="headerlink" title="4.2 功能："></a>4.2 功能：</h4><ol>
+<li>数据库连接池，代替DBCP和C3P0</li>
+<li>可以监控数据库访问性能</li>
+<li>数据库密码加密</li>
+<li>SQL执行日志</li>
+<li>拓展JDBC：Filter机制</li>
+</ol>
+<h4 id="4-3-配置方法："><a href="#4-3-配置方法：" class="headerlink" title="4.3 配置方法："></a>4.3 配置方法：</h4><h5 id="4-3-1-纯yml配置"><a href="#4-3-1-纯yml配置" class="headerlink" title="4.3.1 纯yml配置"></a>4.3.1 纯yml配置</h5><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用druid数据源</span></span><br><span class="line"><span class="attr">type:</span> <span class="string">com.alibaba.druid.pool.DruidDataSource</span></span><br><span class="line"><span class="attr">druid:</span></span><br><span class="line">   <span class="comment"># 初始化大小</span></span><br><span class="line"><span class="attr">   initialSize:</span> <span class="number">10</span></span><br><span class="line">   <span class="comment">#最小连接数</span></span><br><span class="line"><span class="attr">   minIdle:</span> <span class="number">10</span></span><br><span class="line">   <span class="comment">#最大连接数</span></span><br><span class="line"><span class="attr">   maxActive:</span> <span class="number">200</span></span><br><span class="line">   <span class="comment"># 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒</span></span><br><span class="line"><span class="attr">   time-between-eviction-runs-millis:</span> <span class="number">60000</span></span><br><span class="line">   <span class="comment"># 配置一个连接在池中最小生存的时间，单位是毫秒</span></span><br><span class="line"><span class="attr">   min-evictable-idle-time-millis:</span> <span class="number">300000</span></span><br><span class="line">   <span class="comment"># 配置测试查询语句</span></span><br><span class="line"><span class="attr">   validationQuery:</span> <span class="string">SELECT</span> <span class="number">1</span> <span class="string">FROM</span> <span class="string">DUAL</span></span><br><span class="line"><span class="attr">   testOnBorrow:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">   testWhileIdle:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">   removeAbandoned:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">   removeAbandonedTimeout:</span> <span class="number">1800</span></span><br><span class="line"><span class="attr">   logAbandoned:</span> <span class="literal">true</span></span><br><span class="line">   <span class="comment"># 打开PSCache，并且指定每个连接上PSCache的大小</span></span><br><span class="line"><span class="attr">   poolPreparedStatements:</span> <span class="literal">true</span></span><br><span class="line"><span class="attr">   maxOpenPreparedStatements:</span> <span class="number">100</span></span><br><span class="line">   <span class="comment"># 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙</span></span><br><span class="line"><span class="attr">   filters:</span> <span class="string">stat,wall</span></span><br><span class="line">   <span class="comment"># 通过connectProperties属性来打开mergeSql功能；慢SQL记录</span></span><br><span class="line"><span class="attr">   connectionProperties:</span> <span class="string">druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000</span></span><br><span class="line">   <span class="comment">#配置监控视图</span></span><br><span class="line"><span class="attr">   stat-view-servlet:</span></span><br><span class="line">     <span class="comment">#登录查看信息的账号密码, 用于登录Druid监控后台</span></span><br><span class="line"><span class="attr">     login-username:</span> <span class="string">admin</span></span><br><span class="line"><span class="attr">     login-password:</span> <span class="number">1234</span></span><br><span class="line">     <span class="comment">#是否能够重置数据.</span></span><br><span class="line"><span class="attr">     reset-enable:</span> <span class="literal">false</span></span><br><span class="line"><span class="attr">     url-pattern:</span> <span class="string">/druid/*</span></span><br><span class="line">     <span class="comment"># 添加IP白名单</span></span><br><span class="line">     <span class="comment">#allow:</span></span><br><span class="line">     <span class="comment"># 添加IP黑名单，当白名单和黑名单重复时，黑名单优先级更高</span></span><br><span class="line">     <span class="comment">#deny:</span></span><br><span class="line">  <span class="comment">#监控拦截器</span></span><br><span class="line"><span class="attr">  web-stat-filter:</span></span><br><span class="line">     <span class="comment"># 添加过滤规则</span></span><br><span class="line"><span class="attr">     url-pattern:</span> <span class="string">/*</span></span><br><span class="line">     <span class="comment"># 忽略过滤格式</span></span><br><span class="line"><span class="attr">     exclusions:</span> <span class="string">"*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="4-3-2-配置类"><a href="#4-3-2-配置类" class="headerlink" title="4.3.2 配置类"></a>4.3.2 配置类</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DruidConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(DruidConfig.class);</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AppConfig appConfig;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.url&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String dbUrl;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.username&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.password&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.driver-class-name&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String driverClassName;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.initial-size&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> initialSize;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.min-idle&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> minIdle;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.max-active&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> maxActive;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.max-wait&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> maxWait;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.time-between-eviction-runs-millis&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> timeBetweenEvictionRunsMillis;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.min-evictable-idle-time-millis&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> minEvictableIdleTimeMillis;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.validation-query&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String validationQuery;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.test-while-idle&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> testWhileIdle;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.test-on-borrow&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> testOnBorrow;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.test-on-return&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> testOnReturn;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.pool-prepared-statements&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> poolPreparedStatements;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.max-pool-prepared-statement-per-connection-size&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> maxPoolPreparedStatementPerConnectionSize;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;spring.datasource.druid.filters&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String filters;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"&#123;spring.datasource.druid.connection-properties&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String connectionProperties;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span>     <span class="comment">//声明其为Bean实例</span></span><br><span class="line">    <span class="meta">@Primary</span>  <span class="comment">//在同样的DataSource中，首先使用被标注的DataSource</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DataSource <span class="title">dataSource</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        DruidDataSource datasource = <span class="keyword">new</span> DruidDataSource();</span><br><span class="line">        datasource.setUrl(dbUrl);</span><br><span class="line">        datasource.setUsername(username);</span><br><span class="line">        datasource.setPassword(password);</span><br><span class="line">        datasource.setDriverClassName(driverClassName);</span><br><span class="line">        <span class="comment">//configuration</span></span><br><span class="line">        datasource.setInitialSize(initialSize);</span><br><span class="line">        datasource.setMinIdle(minIdle);</span><br><span class="line">        datasource.setMaxActive(maxActive);</span><br><span class="line">        datasource.setMaxWait(maxWait);</span><br><span class="line">        datasource.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);</span><br><span class="line">        datasource.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);</span><br><span class="line">        datasource.setValidationQuery(validationQuery);</span><br><span class="line">        datasource.setTestWhileIdle(testWhileIdle);</span><br><span class="line">        datasource.setTestOnBorrow(testOnBorrow);</span><br><span class="line">        datasource.setTestOnReturn(testOnReturn);</span><br><span class="line">        datasource.setPoolPreparedStatements(poolPreparedStatements);</span><br><span class="line">        datasource.setMaxPoolPreparedStatementPerConnectionSize(maxPoolPreparedStatementPerConnectionSize);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            datasource.setFilters(filters);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            logger.error(<span class="string">"druid configuration initialization filter"</span>, e);</span><br><span class="line">        &#125;</span><br><span class="line">        datasource.setConnectionProperties(connectionProperties);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> datasource;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ServletRegistrationBean <span class="title">druidServlet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//logger.info("init Druid Servlet Configuration ");</span></span><br><span class="line">        ServletRegistrationBean servletRegistrationBean = <span class="keyword">new</span> ServletRegistrationBean();</span><br><span class="line">        servletRegistrationBean.setServlet(<span class="keyword">new</span> StatViewServlet());</span><br><span class="line">        servletRegistrationBean.addUrlMappings(<span class="string">"/druid/*"</span>);</span><br><span class="line">        Map&lt;String, String&gt; initParameters = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        initParameters.put(<span class="string">"loginUsername"</span>, appConfig.getDruidUserName());<span class="comment">// 用户名</span></span><br><span class="line">        initParameters.put(<span class="string">"loginPassword"</span>, appConfig.getDruidPassword());<span class="comment">// 密码</span></span><br><span class="line">        initParameters.put(<span class="string">"resetEnable"</span>, appConfig.getDruidResetAll());<span class="comment">// 禁用HTML页面上的“Reset All”功能</span></span><br><span class="line">        initParameters.put(<span class="string">"allow"</span>, <span class="string">""</span>); <span class="comment">// IP白名单 (没有配置或者为空，则允许所有访问)</span></span><br><span class="line">        <span class="comment">//initParameters.put("deny", "192.168.20.38");// IP黑名单 (存在共同时，deny优先于allow)</span></span><br><span class="line">        servletRegistrationBean.setInitParameters(initParameters);</span><br><span class="line">        <span class="keyword">return</span> servletRegistrationBean;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> FilterRegistrationBean <span class="title">druidWebStatViewFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        FilterRegistrationBean registrationBean = <span class="keyword">new</span> FilterRegistrationBean(<span class="keyword">new</span> WebStatFilter());</span><br><span class="line">        registrationBean.addInitParameter(<span class="string">"urlPatterns"</span>, <span class="string">"/*"</span>);</span><br><span class="line">        registrationBean.addInitParameter(<span class="string">"exclusions"</span>, <span class="string">"*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"</span>);</span><br><span class="line">        <span class="keyword">return</span> registrationBean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-4-使用方法"><a href="#4-4-使用方法" class="headerlink" title="4.4 使用方法"></a>4.4 使用方法</h4><p>本地访问 <a href="http://localhost:8080/druid" target="_blank" rel="noopener">http://localhost:8080/druid</a></p>
+<h2 id="5-Redis缓存"><a href="#5-Redis缓存" class="headerlink" title="5. Redis缓存"></a>5. Redis缓存</h2><h3 id="5-1-Redis"><a href="#5-1-Redis" class="headerlink" title="5.1 Redis"></a>5.1 Redis</h3><h4 id="5-1-1-Redis是什么"><a href="#5-1-1-Redis是什么" class="headerlink" title="5.1.1 Redis是什么"></a>5.1.1 Redis是什么</h4><blockquote>
+<p>Redis是一个开源（BSD许可），内存数据结构存储，用作数据库，缓存和消息代理。它支持数据结构，如 strings, hashes, lists, sets, sorted sets with range queries, bitmaps, hyperloglogs, geospatial indexes with radius queries and streams。Redis具有内置复制，Lua脚本，LRU驱逐，事务和不同级别的磁盘持久性，并通过Redis Sentinel提供高可用性并使用Redis Cluster自动分区</p>
+</blockquote>
+<blockquote>
+<p>Redis通常被称为<em>数据结构</em>服务器，这意味着Redis通过一组命令提供对可变数据结构的访问，这些命令使用带有TCP套接字和简单协议的<code>server-client</code>模型发送。因此，不同的进程可以以共享方式和修改相同的数据结构。</p>
+</blockquote>
+<h4 id="5-1-2-Redis数据结构的特殊属性"><a href="#5-1-2-Redis数据结构的特殊属性" class="headerlink" title="5.1.2 Redis数据结构的特殊属性"></a>5.1.2 Redis数据结构的特殊属性</h4><ul>
+<li>Redis关心将它们存储在磁盘上， 即使它们总是被提供并修改到内存服务器内存中。这意味着Redis速度很快，但这也是非易失性的</li>
+<li>数据结构的实现强调内存效率，因此与使用高级变成语言建模的相同数据结构相比，Redis内部的数据结构可能会使用更少的内存</li>
+<li>Redis提供了许多在数据库中很容易找到的功能，如复制，可调节的持久性，群集，高可用性。</li>
+</ul>
+<h3 id="5-2-Redis的应用场景"><a href="#5-2-Redis的应用场景" class="headerlink" title="5.2 Redis的应用场景"></a>5.2 Redis的应用场景</h3><h3 id="5-3-Redis的数据结构"><a href="#5-3-Redis的数据结构" class="headerlink" title="5.3 Redis的数据结构"></a>5.3 Redis的数据结构</h3><p><img src="https://upload-images.jianshu.io/upload_images/6751690-0dbb4c73b2761208.png?imageMogr2/auto-orient/" alt="img"></p>
+<h3 id="5-4-Redis代替Session保存用户状态"><a href="#5-4-Redis代替Session保存用户状态" class="headerlink" title="5.4 Redis代替Session保存用户状态"></a>5.4 Redis代替Session保存用户状态</h3><h2 id="6-PageHelper"><a href="#6-PageHelper" class="headerlink" title="6. PageHelper"></a>6. PageHelper</h2><p>分页！</p>
+<h5 id="添加依赖"><a href="#添加依赖" class="headerlink" title="添加依赖"></a>添加依赖</h5><p>注意：SpringBoot中要添加SpringBoot的starter，不然不能用</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.pagehelper<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>pagehelper-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="添加配置"><a href="#添加配置" class="headerlink" title="添加配置"></a>添加配置</h5><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">pagehelper:</span></span><br><span class="line">  <span class="comment">#自动检测当前的数据库链接，自动选择合适的分页方式。可以指定使用的方言</span></span><br><span class="line"><span class="attr">  helperDialect:</span> <span class="string">mysql</span></span><br><span class="line">  <span class="comment">#分页合理化参数，默认值为false，当设置为true时，pageNum&lt;=0时会查询第一页，pageNum&gt;pages总数时，会查询最后一页。</span></span><br><span class="line"><span class="attr">  reasonable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment">#支持通过Mapper接口参数来传递分页参数，默认值false，分页插件会从查询方法的参数值中，自动根据params配置的字段中取值，查找到合适的值就自动分页</span></span><br><span class="line"><span class="attr">  supportMethodsArguments:</span> <span class="literal">true</span></span><br><span class="line">  <span class="comment">#为了支持startPage(Object params)，增加了该参数来配置参数映射</span></span><br><span class="line">  <span class="comment">#用于从对象中根据属性名取值，可以配置 pageNum,pageSize,count,pageSizeZero,reasonable，</span></span><br><span class="line">  <span class="comment">#不配置映射时用默认值， 默认值为pageNum=pageNum;pageSize=pageSize;count=countSql;reasonable=reasonable;pageSizeZero=pageSizeZero。</span></span><br><span class="line"><span class="attr">  params:</span> <span class="string">count=countSql</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> PageInfo&lt;UserInfo&gt; <span class="title">selectAll</span><span class="params">(Integer page, Integer size)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//开启分页查询，写在查询语句上方</span></span><br><span class="line">    <span class="comment">//只有紧跟在PageHelper.startPage方法后的第一个Mybatis的查询（Select）方法会被分页。</span></span><br><span class="line">    PageHelper.startPage(page, size);</span><br><span class="line">    List&lt;UserInfo&gt; userInfoList = userInfoMapper.selectAll();</span><br><span class="line">    PageInfo&lt;UserInfo&gt; pageInfo = <span class="keyword">new</span> PageInfo&lt;&gt;(userInfoList);</span><br><span class="line">    <span class="keyword">return</span> pageInfo;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-单点登录"><a href="#7-单点登录" class="headerlink" title="7. 单点登录"></a>7. 单点登录</h2><p>cookie的安全性</p>
+<p>跨域读取cookie</p>
+<h2 id="8-Eureka"><a href="#8-Eureka" class="headerlink" title="8. Eureka"></a>8. Eureka</h2><h3 id="8-1-高可用注册中心"><a href="#8-1-高可用注册中心" class="headerlink" title="8.1 高可用注册中心"></a>8.1 高可用注册中心</h3><ol>
+<li>所有节点即是服务的提供方，也是服务的消费方</li>
+<li>将自己作为服务向其他服务中心注册自己，以实现服务清单的互相同步</li>
+</ol>
+<h3 id="8-2-搭建步骤"><a href="#8-2-搭建步骤" class="headerlink" title="8.2 搭建步骤"></a>8.2 搭建步骤</h3><h5 id="EnableEurekaServer声明注册中心"><a href="#EnableEurekaServer声明注册中心" class="headerlink" title="@EnableEurekaServer声明注册中心"></a><code>@EnableEurekaServer</code>声明注册中心</h5><h5 id="添加配置-1"><a href="#添加配置-1" class="headerlink" title="添加配置"></a>添加配置</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># server (eureka 默认端口为：8761)</span><br><span class="line">server.port=8761</span><br><span class="line"># 服务名</span><br><span class="line">spring.application.name=spring-cloud-server</span><br><span class="line"># 是否注册到eureka（eureka本身是不需要再注册到自己的）</span><br><span class="line">eureka.client.register-with-eureka=false</span><br><span class="line"># 是否从eureka获取注册信息</span><br><span class="line">eureka.client.fetch-registry=false</span><br><span class="line"># eureka服务器的地址（注意：地址最后面的 /eureka/ 这个是固定值）</span><br><span class="line">eureka.client.serviceUrl.defaultZone=http://localhost:$&#123;server.port&#125;/eureka/</span><br><span class="line">#服务失效时间，Eureka多长时间没收到服务的renew操作，就剔除该服务，默认90秒</span><br><span class="line">eureka.instance.leaseExpirationDurationInSeconds=15</span><br><span class="line">#eureka server清理无效节点的时间间隔，默认60000毫秒，即60秒</span><br><span class="line">eureka.server.evictionIntervalTimerInMs=20000</span><br><span class="line"># 自我保护模式（缺省为打开）</span><br><span class="line">eureka.server.enable-self-preservation: true</span><br><span class="line"># 续期时间，即扫描失效服务的间隔时间（缺省为60*1000ms）       </span><br><span class="line">eureka.server.eviction-interval-timer-in-ms: 5000</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>1.根据切面<code>AfterReturning</code>可以得到返回值，来为操作记录添加状态或者根据状态判断是否保存</p>
+<p>2.少用异常，给前端统一的状态吗和错误信息</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/24/Spring/" rel="next" title>
+                <i class="fa fa-chevron-left"></i> 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/24/计算机网络/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/author.jpg" alt="PPCoder">
+            
+              <p class="site-author-name" itemprop="name">PPCoder</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-搭建服务"><span class="nav-number">1.</span> <span class="nav-text">1.搭建服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#保存操作记录"><span class="nav-number">1.1.</span> <span class="nav-text">保存操作记录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常处理："><span class="nav-number">1.2.</span> <span class="nav-text">异常处理：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#记录日志："><span class="nav-number">1.3.</span> <span class="nav-text">记录日志：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SpringBoot中日志配置"><span class="nav-number">1.3.1.</span> <span class="nav-text">SpringBoot中日志配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#在项目中打印日志"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">在项目中打印日志</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#将日志存储到文件"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">将日志存储到文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置日志级别"><span class="nav-number">1.3.1.3.</span> <span class="nav-text">设置日志级别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义日志配置"><span class="nav-number">1.3.2.</span> <span class="nav-text">自定义日志配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#appender：格式化日志输出节点"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">appender：格式化日志输出节点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#root：指定最基础的日志级别"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">root：指定最基础的日志级别</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#loger：设置某个包或类的日志打印级别"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">loger：设置某个包或类的日志打印级别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事务回滚"><span class="nav-number">1.4.</span> <span class="nav-text">事务回滚</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-nginx转发均衡"><span class="nav-number">2.</span> <span class="nav-text">2. nginx转发均衡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-postman调用接口"><span class="nav-number">3.</span> <span class="nav-text">3. postman调用接口</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Druid监控"><span class="nav-number">4.</span> <span class="nav-text">4. Druid监控</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-Druid：数据库连接池"><span class="nav-number">4.0.1.</span> <span class="nav-text">4.1 Druid：数据库连接池</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-功能："><span class="nav-number">4.0.2.</span> <span class="nav-text">4.2 功能：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-配置方法："><span class="nav-number">4.0.3.</span> <span class="nav-text">4.3 配置方法：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-1-纯yml配置"><span class="nav-number">4.0.3.1.</span> <span class="nav-text">4.3.1 纯yml配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-2-配置类"><span class="nav-number">4.0.3.2.</span> <span class="nav-text">4.3.2 配置类</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4-使用方法"><span class="nav-number">4.0.4.</span> <span class="nav-text">4.4 使用方法</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Redis缓存"><span class="nav-number">5.</span> <span class="nav-text">5. Redis缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-Redis"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-1-Redis是什么"><span class="nav-number">5.1.1.</span> <span class="nav-text">5.1.1 Redis是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-Redis数据结构的特殊属性"><span class="nav-number">5.1.2.</span> <span class="nav-text">5.1.2 Redis数据结构的特殊属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-Redis的应用场景"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 Redis的应用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-Redis的数据结构"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 Redis的数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-Redis代替Session保存用户状态"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 Redis代替Session保存用户状态</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-PageHelper"><span class="nav-number">6.</span> <span class="nav-text">6. PageHelper</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#添加依赖"><span class="nav-number">6.0.0.1.</span> <span class="nav-text">添加依赖</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加配置"><span class="nav-number">6.0.0.2.</span> <span class="nav-text">添加配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用方法"><span class="nav-number">6.0.0.3.</span> <span class="nav-text">使用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-单点登录"><span class="nav-number">7.</span> <span class="nav-text">7. 单点登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-Eureka"><span class="nav-number">8.</span> <span class="nav-text">8. Eureka</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#8-1-高可用注册中心"><span class="nav-number">8.1.</span> <span class="nav-text">8.1 高可用注册中心</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-2-搭建步骤"><span class="nav-number">8.2.</span> <span class="nav-text">8.2 搭建步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#EnableEurekaServer声明注册中心"><span class="nav-number">8.2.0.1.</span> <span class="nav-text">@EnableEurekaServer声明注册中心</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加配置-1"><span class="nav-number">8.2.0.2.</span> <span class="nav-text">添加配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">10.</span> <span class="nav-text">参考资料</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PPCoder</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

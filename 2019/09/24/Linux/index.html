@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概念用户空间/内核空间 现在操作系统都是采用虚拟存储器，那么对32位操作系统而言，它的寻址空间（虚拟存储空间）为4G（2的32次方）。操作系统的核心是内核，独立于普通的应用程序，可以访问受保护的内存空间，也有访问底层硬件设备的所有权限。为了保证用户进程不能直接操作内核（kernel），保证内核的安全，操作系统将虚拟空间划分为两部分，一部分为内核空间，一部分为用户空间。  进程切换 为了控制进程的执">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Yun">
+<meta property="og:url" content="http://yoursite.com/2019/09/24/Linux/index.html">
+<meta property="og:site_name" content="Yun">
+<meta property="og:description" content="概念用户空间/内核空间 现在操作系统都是采用虚拟存储器，那么对32位操作系统而言，它的寻址空间（虚拟存储空间）为4G（2的32次方）。操作系统的核心是内核，独立于普通的应用程序，可以访问受保护的内存空间，也有访问底层硬件设备的所有权限。为了保证用户进程不能直接操作内核（kernel），保证内核的安全，操作系统将虚拟空间划分为两部分，一部分为内核空间，一部分为用户空间。  进程切换 为了控制进程的执">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-09-24T14:44:20.342Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Yun">
+<meta name="twitter:description" content="概念用户空间/内核空间 现在操作系统都是采用虚拟存储器，那么对32位操作系统而言，它的寻址空间（虚拟存储空间）为4G（2的32次方）。操作系统的核心是内核，独立于普通的应用程序，可以访问受保护的内存空间，也有访问底层硬件设备的所有权限。为了保证用户进程不能直接操作内核（kernel），保证内核的安全，操作系统将虚拟空间划分为两部分，一部分为内核空间，一部分为用户空间。  进程切换 为了控制进程的执">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/24/Linux/">
+
+
+
+
+
+  <title> | Yun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Code and Love.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/24/Linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PPCoder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-24T22:44:20+08:00">
+                2019-09-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><h5 id="用户空间-内核空间"><a href="#用户空间-内核空间" class="headerlink" title="用户空间/内核空间"></a>用户空间/内核空间</h5><blockquote>
+<p>现在操作系统都是采用虚拟存储器，那么对32位操作系统而言，它的寻址空间（虚拟存储空间）为4G（2的32次方）。<br>操作系统的核心是内核，独立于普通的应用程序，可以访问受保护的内存空间，也有访问底层硬件设备的所有权限。为了保证用户进程不能直接操作内核（kernel），保证内核的安全，操作系统将虚拟空间划分为两部分，一部分为内核空间，一部分为用户空间。</p>
+</blockquote>
+<h5 id="进程切换"><a href="#进程切换" class="headerlink" title="进程切换"></a>进程切换</h5><blockquote>
+<p>为了控制进程的执行，内核必须有能力挂起正在CPU上运行的进程，并恢复以前挂起的某个进程的执行。这种行为被称为进程切换。因此可以说，任何进程都是在操作系统内核的支持下运行的，是与内核紧密相关的，并且进程切换是非常耗费资源的</p>
+</blockquote>
+<h5 id="进程阻塞"><a href="#进程阻塞" class="headerlink" title="进程阻塞"></a>进程阻塞</h5><blockquote>
+<p>正在执行的进程，由于期待的某些事件未发生，如请求系统资源失败、等待某种操作的完成、新数据尚未到达或无新工作做等，则由系统自动执行阻塞原语(Block)，使自己由运行状态变为阻塞状态。可见，进程的阻塞是进程自身的一种主动行为，也因此只有处于运行态的进程（获得了CPU资源），才可能将其转为阻塞状态。当进程进入阻塞状态，是不占用CPU资源的。</p>
+</blockquote>
+<h5 id="文件描述符"><a href="#文件描述符" class="headerlink" title="文件描述符"></a>文件描述符</h5><blockquote>
+<p>内核为了高效管理已被打开的文件所创建的索引，用于指向被打开的文件，所有执行IO操作的系统调用都通过文件描述符，文件描述符是一个简单的非负整数，用以表明每个被进程打开的文件。</p>
+<p>程序刚刚启动时，第一个打开的文件是0，第二个是1，也可理解为文件的身份id</p>
+</blockquote>
+<h5 id="缓存IO"><a href="#缓存IO" class="headerlink" title="缓存IO"></a>缓存IO</h5><blockquote>
+<p>缓存I/O又称为标准I/O，大多数文件系统的默认I/O操作都是缓存I/O。在Linux的缓存I/O机制中，操作系统会将I/O的数据缓存在文件系统的页缓存中，即数据会先被拷贝到操作系统内核的缓冲区中，然后才会从操作系统内核的缓冲区拷贝到应用程序的地址空间。</p>
+</blockquote>
+<h3 id="系统文件"><a href="#系统文件" class="headerlink" title="系统文件"></a>系统文件</h3><table>
+<thead>
+<tr>
+<th>目录</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/</td>
+<td>根目录</td>
+</tr>
+<tr>
+<td>/boot</td>
+<td>引导程序，存放内核</td>
+</tr>
+<tr>
+<td>/sbin</td>
+<td>超级用户的命令集</td>
+</tr>
+<tr>
+<td>/bin</td>
+<td>普通用户的命令集</td>
+</tr>
+<tr>
+<td>/lib</td>
+<td>系统引导和命令集的共享库</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>设备文件目录</td>
+</tr>
+<tr>
+<td>/home</td>
+<td>普通用户home目录</td>
+</tr>
+<tr>
+<td>/root</td>
+<td>root用户home目录</td>
+</tr>
+<tr>
+<td>/etc</td>
+<td>全局配置文件</td>
+</tr>
+<tr>
+<td>/usr</td>
+<td>命令库文件和通常操作不会修改的文件</td>
+</tr>
+<tr>
+<td>/proc</td>
+<td>特殊文件目录</td>
+</tr>
+<tr>
+<td>/opt</td>
+<td>可选择的文件目录</td>
+</tr>
+<tr>
+<td>/mnt</td>
+<td>临时挂载目录</td>
+</tr>
+<tr>
+<td>/media</td>
+<td>挂载的媒体设备目录</td>
+</tr>
+<tr>
+<td>/var</td>
+<td>内容经常变化的目录</td>
+</tr>
+<tr>
+<td>/tmp</td>
+<td>临时文件目录(文件可能会被系统自动清空)</td>
+</tr>
+<tr>
+<td>/lost+found</td>
+<td>恢复文件存放的位置</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/usr/lib</td>
+<td>目标库文件，动态连接库＋不直接调用的可执行文件</td>
+</tr>
+<tr>
+<td>/usr/bin</td>
+<td>使用者使用，不是系统自检所必须可执行文件</td>
+</tr>
+<tr>
+<td>/usr/sbin</td>
+<td>管理员使用的非系统必须的可执行文件存放目录</td>
+</tr>
+<tr>
+<td>/usr/share</td>
+<td>存放共享文件的目录</td>
+</tr>
+<tr>
+<td>/usr/include</td>
+<td>linux下开发和编译所需要的头文件</td>
+</tr>
+<tr>
+<td>/usr/local</td>
+<td>安装本地程序一般的默认路径</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/etc/rc</td>
+<td>启动，或改变运行级时运行的脚本或脚本的目录</td>
+</tr>
+<tr>
+<td>/etc/passwd</td>
+<td>用户数据库，其中的域给出了用户名，真实姓名</td>
+</tr>
+<tr>
+<td></td>
+<td>用户起始目录，加密口令和用户的其他信息</td>
+</tr>
+<tr>
+<td>/etc/fdprm</td>
+<td>软盘参数表</td>
+</tr>
+<tr>
+<td>/etc/fstab</td>
+<td>指定启动时需要自动安装的文件系统列表</td>
+</tr>
+<tr>
+<td>/etc/group</td>
+<td>组信息</td>
+</tr>
+<tr>
+<td>/etc/inittab</td>
+<td>init的配置文件</td>
+</tr>
+<tr>
+<td>/etc/issue</td>
+<td>包括用户在登录提示符前的输出信息</td>
+</tr>
+<tr>
+<td></td>
+<td>通常包括系统的一段短说明或欢迎信息，具体内容由系统管理员确定</td>
+</tr>
+<tr>
+<td>/etc/magic</td>
+<td>“file”的配置文件</td>
+</tr>
+<tr>
+<td>/etc/motd</td>
+<td>message of the day,用户成功登陆后自动输出</td>
+</tr>
+<tr>
+<td>/etc/mtab</td>
+<td>当前安装的文件系统列表</td>
+</tr>
+<tr>
+<td>/etc/shadow</td>
+<td></td>
+</tr>
+<tr>
+<td>/etc/login.defs</td>
+<td>login命令的配置文件</td>
+</tr>
+<tr>
+<td>/etc/printcap</td>
+<td>类似/etc/termcap，针对打印机</td>
+</tr>
+<tr>
+<td>/etc/termcap</td>
+<td>终端性能数据库。说明不同的终端用什么“转义序列”控制</td>
+</tr>
+<tr>
+<td></td>
+<td>写程序时不直接输入转义序列，而是从中查找要做的工作的正确序列</td>
+</tr>
+<tr>
+<td>/etc/profile</td>
+<td>登录或启动bourne或c shells执行的文件</td>
+</tr>
+<tr>
+<td>/etc/csh.login</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>/etc/csh.cshrc</td>
+<td>同上，这允许系统管理员为所有用户建立全局缺省环境</td>
+</tr>
+<tr>
+<td>/etc/securetty</td>
+<td>确认安全终端，即哪个终端允许超级用户登录</td>
+</tr>
+<tr>
+<td></td>
+<td>一般只列出虚拟控制台，这样就不可能通过调制解调器或网络闯入系统并得到超级用户特权</td>
+</tr>
+<tr>
+<td>/etc/shells</td>
+<td>列出可以使用的shell</td>
+</tr>
+<tr>
+<td></td>
+<td>chsh命令允许用户在本文件指定范围内改变登录的shell。</td>
+</tr>
+<tr>
+<td></td>
+<td>提供一台机器ftp服务的服务进程ftpd检查用户shell是否在/etc/shells文件中，如果不是，将不允许该用户登录</td>
+</tr>
+</tbody></table>
+<h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><h4 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h4><blockquote>
+<p>Daemon()程序是一直运行的服务端程序，又称为守护进程。通常在系统后台运行，没有控制终端，不与前台交互，Daemon程序一般作为系统服务使用。Daemon是长时间运行的进程，通常在系统启动后就运行，在系统关闭时才结束。一般说Daemon程序在后台运行，是因为它没有控制终端，无法和前台的用户交互。Daemon程序一般都作为服务程序使用，等待客户端程序与它通信。我们也把运行的Daemon程序称作守护进程。</p>
+</blockquote>
+<h3 id="IO"><a href="#IO" class="headerlink" title="IO"></a>IO</h3><h4 id="概念-1"><a href="#概念-1" class="headerlink" title="概念"></a>概念</h4><h5 id="阻塞"><a href="#阻塞" class="headerlink" title="阻塞"></a>阻塞</h5><p>一直等待数据就绪再返回</p>
+<h5 id="非阻塞"><a href="#非阻塞" class="headerlink" title="非阻塞"></a>非阻塞</h5><p>无论什么情况都会立即返回</p>
+<h5 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h5><p>一直阻塞进程，直到IO操作结束</p>
+<h5 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h5><p>不会阻塞调用者进程</p>
+<h4 id="IO过程"><a href="#IO过程" class="headerlink" title="IO过程"></a>IO过程</h4><ul>
+<li>等待数据准备</li>
+<li>将数据从内核拷贝到用户进程中</li>
+</ul>
+<h4 id="IO模型"><a href="#IO模型" class="headerlink" title="IO模型"></a>IO模型</h4><ul>
+<li>Blocking IO - 阻塞IO</li>
+<li>NoneBlocking IO - 非阻塞IO</li>
+<li>IO multiplexing - IO多路复用</li>
+<li>signal driven IO - 信号驱动IO</li>
+<li>asynchronous IO - 异步IO</li>
+</ul>
+<h5 id="阻塞IO"><a href="#阻塞IO" class="headerlink" title="阻塞IO"></a>阻塞IO</h5><p>IO执行的两个过程都被block</p>
+<h5 id="非阻塞IO"><a href="#非阻塞IO" class="headerlink" title="非阻塞IO"></a>非阻塞IO</h5><ul>
+<li><p>用户进程不断询问kernel数据准备好没有</p>
+</li>
+<li><p>用户进程没有阻塞，内核被阻塞</p>
+</li>
+</ul>
+<h5 id="IO多路复用"><a href="#IO多路复用" class="headerlink" title="IO多路复用"></a>IO多路复用</h5><p>优点：系统开销小，系统不必创建(维护)进程/线程，减小了系统开销</p>
+<p>==select==：轮询</p>
+<ul>
+<li>处理多个连接：监听多个socket连接，任意一个数据就绪了就返回进行拷贝工作</li>
+<li>select底层通过轮询机制来判断socket读写是否就绪，会增加开销，支持的文件描述符数量过少</li>
+<li>每个socket都是non-blocking，</li>
+</ul>
+<p>poll：</p>
+<p>==epoll==：事件回调</p>
+<blockquote>
+<p>在内核中当文件描述符被激活时都会调用一个回调函数，epoll根据回调函数直接定位文件描述符，极大提高了效率，同时也减轻了CPU的负担，不用一遍遍轮询</p>
+</blockquote>
+<h5 id="异步IO"><a href="#异步IO" class="headerlink" title="异步IO"></a>异步IO</h5><p>读取操作通知内核进行读取并将数据拷贝至进程中</p>
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/22/运维开发文档/" rel="next" title="ssh安全中的一些要点">
+                <i class="fa fa-chevron-left"></i> ssh安全中的一些要点
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/24/JavaEE/" rel="prev" title>
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/author.jpg" alt="PPCoder">
+            
+              <p class="site-author-name" itemprop="name">PPCoder</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#用户空间-内核空间"><span class="nav-number">1.0.1.</span> <span class="nav-text">用户空间/内核空间</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#进程切换"><span class="nav-number">1.0.2.</span> <span class="nav-text">进程切换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#进程阻塞"><span class="nav-number">1.0.3.</span> <span class="nav-text">进程阻塞</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#文件描述符"><span class="nav-number">1.0.4.</span> <span class="nav-text">文件描述符</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#缓存IO"><span class="nav-number">1.0.5.</span> <span class="nav-text">缓存IO</span></a></li></ol></li></ol><li class="nav-item nav-level-3"><a class="nav-link" href="#系统文件"><span class="nav-number">2.</span> <span class="nav-text">系统文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#进程"><span class="nav-number">3.</span> <span class="nav-text">进程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#守护进程"><span class="nav-number">3.1.</span> <span class="nav-text">守护进程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IO"><span class="nav-number">4.</span> <span class="nav-text">IO</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#概念-1"><span class="nav-number">4.1.</span> <span class="nav-text">概念</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#阻塞"><span class="nav-number">4.1.1.</span> <span class="nav-text">阻塞</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#非阻塞"><span class="nav-number">4.1.2.</span> <span class="nav-text">非阻塞</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#同步"><span class="nav-number">4.1.3.</span> <span class="nav-text">同步</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#异步"><span class="nav-number">4.1.4.</span> <span class="nav-text">异步</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IO过程"><span class="nav-number">4.2.</span> <span class="nav-text">IO过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IO模型"><span class="nav-number">4.3.</span> <span class="nav-text">IO模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#阻塞IO"><span class="nav-number">4.3.1.</span> <span class="nav-text">阻塞IO</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#非阻塞IO"><span class="nav-number">4.3.2.</span> <span class="nav-text">非阻塞IO</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#IO多路复用"><span class="nav-number">4.3.3.</span> <span class="nav-text">IO多路复用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#异步IO"><span class="nav-number">4.3.4.</span> <span class="nav-text">异步IO</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PPCoder</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
