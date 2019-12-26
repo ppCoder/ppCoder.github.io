@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="JVM  java运行时数据区java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。 方法区 堆 运行时常量池 程序计数器：native method is undefined 本地方法栈：native 虚拟机栈：thread–&amp;gt;VM stack, method–&amp;gt;frame  java内存模型主要目标是定义程序中各个变量的访问规则，即在虚拟机中将变">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM笔记">
+<meta property="og:url" content="http://yoursite.com/2019/07/17/JVM/index.html">
+<meta property="og:site_name" content="Yun">
+<meta property="og:description" content="JVM  java运行时数据区java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。 方法区 堆 运行时常量池 程序计数器：native method is undefined 本地方法栈：native 虚拟机栈：thread–&amp;gt;VM stack, method–&amp;gt;frame  java内存模型主要目标是定义程序中各个变量的访问规则，即在虚拟机中将变">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="c:%5CUsers%5CHP%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1560514540657.png">
+<meta property="og:updated_time" content="2019-12-26T08:12:04.904Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM笔记">
+<meta name="twitter:description" content="JVM  java运行时数据区java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。 方法区 堆 运行时常量池 程序计数器：native method is undefined 本地方法栈：native 虚拟机栈：thread–&amp;gt;VM stack, method–&amp;gt;frame  java内存模型主要目标是定义程序中各个变量的访问规则，即在虚拟机中将变">
+<meta name="twitter:image" content="c:%5CUsers%5CHP%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1560514540657.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/17/JVM/">
+
+
+
+
+
+  <title>JVM笔记 | Yun</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Yun</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Code and Love.</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-feeling">
+          <a href="/feeling/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-feeling"></i> <br>
+            
+            feeling
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-notes">
+          <a href="/notes/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-notes"></i> <br>
+            
+            notes
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/17/JVM/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PPCoder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Yun">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JVM笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-17T19:38:10+08:00">
+                2019-07-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+
+<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><hr>
+<p><img src="C:%5CUsers%5CHP%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1560514540657.png" alt="1560514540657"></p>
+<h2 id="java运行时数据区"><a href="#java运行时数据区" class="headerlink" title="java运行时数据区"></a>java运行时数据区</h2><p>java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。</p>
+<p>方法区</p>
+<p>堆</p>
+<p>运行时常量池</p>
+<p>程序计数器：native method is undefined</p>
+<p>本地方法栈：native</p>
+<p>虚拟机栈：thread–&gt;VM stack, method–&gt;frame</p>
+<hr>
+<h2 id="java内存模型"><a href="#java内存模型" class="headerlink" title="java内存模型"></a>java内存模型</h2><p>主要目标是定义程序中各个变量的访问规则，即在虚拟机中将变量存储到内存和从内存中去除变量这样的底层细节。</p>
+<p>方法区：（非堆，non-heap，metaspace（1.8元数据区），perm space（1.7永久代））</p>
+<p>堆：Old老年代，Young新生代（eden[8]，survivor[2]（from[1]，to[1]））</p>
+<p>java vm 视图监视器：jvisualvm</p>
+<p>gc{</p>
+<p>}</p>
+<p>垃圾收集器：（好坏评判标准：吞吐量和停顿时间）</p>
+<ul>
+<li>Serial 单线程收集器，收集时暂停其他线程</li>
+<li>Serial Old ↑ 标记-整理</li>
+<li>ParNew 多线程gc 收集时暂停其他线程</li>
+<li>Parallel Scanvenge 多线程并行gc 保证<strong>吞吐量优先</strong></li>
+<li>Parallel Old↑</li>
+<li>CMS：concurrent Mark Sweep 更加关注回收<strong>停顿时间</strong> 标记-清除 初始标记–并发标记–重新标记–并发清理</li>
+<li>G1 分代收集（存在于新生代和老年代）空间整理（标记-整理） 停顿时间可设定</li>
+</ul>
+<p>1.关于java虚拟机栈</p>
+<p>thread–&gt;VM stack, method–&gt;frame</p>
+<p>由此可见，一个线程对应着一个虚拟机栈，一个方法对应着一个栈帧，由于栈是后进先出，正对应方法的调用规则，后调用的先返回。方法内部的局部变量等则自然保存在每个栈帧中。</p>
+<p>关于pc寄存器</p>
+<p>pc寄存器是java调试等程序中断操作，代码指令运行的行数，恢复时去这里查找。重要的一点就是，native方法是undefined</p>
+<p>2.运行时数据区是java程序执行过程中各种变量方法存储的逻辑区域，便于管理。</p>
+<p>内存结构模型则是实现这些逻辑区域的底层实现</p>
+<p>3.内存模型的划分</p>
+<p>方法区：（非堆，non-heap，metaspace（1.8元数据区），perm space（1.7永久代））</p>
+<p>堆：Old老年代，Young新生代（eden[8]，survivor[2]（from[1]，to[1]））</p>
+<p>4.确定对象为垃圾的算法：引用-标记，可达性分析</p>
+<p>5.常用的垃圾回收算法：标记-清除，标记-复制，标记-整理</p>
+<p>6.垃圾收集器：（<strong>好坏评判标准：吞吐量和停顿时间</strong>）</p>
+<ul>
+<li>Serial 复制 单线程收集器，收集时暂停其他线程</li>
+<li>Serial Old ↑ 标记-整理</li>
+<li>ParNew 复制 多线程gc 收集时暂停其他线程</li>
+<li>Parallel Scanvenge 复制 多线程并行gc 保证<strong>吞吐量优先</strong></li>
+<li>Parallel Old↑ 标记-整理</li>
+<li>CMS：（concurrent Mark Sweep）标记-清除  更加关注回收<strong>停顿时间</strong></li>
+<li>G1 分代收集（存在于新生代和老年代）空间整理（标记-整理） 停顿时间可设定</li>
+</ul>
+<p>7.吞吐量：当前时刻下，产生一定量的运算或者操作，也就是速率。收集器中就是说在大量的操作，很短的时间内将垃圾收集完成。</p>
+<p>停顿时间：当前作业操作被其他操作打断，到恢复前的一段时间就是停顿时间。即进行回收操作时，占用了其他操作的时间，对于其他操作来说，即产生了停顿时间</p>
+<h2 id="对象已死吗？可达性分析"><a href="#对象已死吗？可达性分析" class="headerlink" title="对象已死吗？可达性分析"></a>对象已死吗？可达性分析</h2><p><strong>三种类型的引用定义了三种不同层次的可达性级别，由强到弱排列如下：</strong></p>
+<p>　　<strong>SoftReference &gt;</strong> <strong>WeakReference &gt; PhantomReference</strong></p>
+<p>　　越弱表示对垃圾回收器的限制越少，对象越容易被回收。</p>
+<h3 id="SoftReference"><a href="#SoftReference" class="headerlink" title="SoftReference"></a>SoftReference</h3><p>　　<strong>SoftReference</strong>用来实现一些内存敏感的缓存(Soft references are for implementing memory-sensitive caches)，只要内存空间足够，对象就会保持不被回收。</p>
+<p>　　反之，当宿主进程的内存空间不足时，对象就会被GC回收。</p>
+<p>　　所以SoftReference意味着：<strong>hold on until you can’t.</strong></p>
+<h3 id="WeakReference"><a href="#WeakReference" class="headerlink" title="WeakReference"></a>WeakReference</h3><p>　　<strong>W**</strong>eakReference<strong>可以用来实现一些规范化映射（</strong>WeakHashMap**），其中key或者value当它们不再被引用时可以自动被回收。</p>
+<p>　　当你想引用一个对象，但是这个对象有自己的生命周期，你不想介入这个对象的生命周期，这时候你就是用弱引用。</p>
+<p>　　这个引用不会在对象的垃圾回收判断中产生任何附加的影响。</p>
+<h3 id="PlantomReference"><a href="#PlantomReference" class="headerlink" title="PlantomReference"></a>PlantomReference</h3><p>　　<strong>PlantomReference</strong>和WeakReference一样，也不会介入引用对象的生命周期。</p>
+<p>　　PhantomReference用来调度一些预验清理动作，提供比Java清理机制更灵活的处理方式。（Phantom references are for scheduling pre-mortem cleanup actions in a more flexible way than is possible with the Java finalization mechanism.）</p>
+<p>　　PlantomReference比较特殊，它的get方法总是返回null，所以你得不到它引用的对象。</p>
+<p>　　它保存<strong>ReferenceQueue</strong>中的轨迹。</p>
+<p>　　它允许你知道对象何时从内存中移除。</p>
+<h2 id="虚拟机指令"><a href="#虚拟机指令" class="headerlink" title="虚拟机指令"></a>虚拟机指令</h2><h4 id="修改gc收集器"><a href="#修改gc收集器" class="headerlink" title="修改gc收集器"></a>修改gc收集器</h4><p>tomcat的catalina.sh配置文件 JAVA_OPTS</p>
+<p>jinfo -flags 参数 pid//实时修改</p>
+<p>Java -XX：参数 -jar xxx.jar //启动时设置</p>
+<h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><p>jps -l //查看java进程</p>
+<p>jstat -class pid 1000（时间） 10（次数）//查看类的信息</p>
+<p>jstat -gc </p>
+<p>jstack pid</p>
+<p>jmap -heap pid</p>
+<p>jmap </p>
+<p>HeapDumpOnOutOfMemoryError //堆内存溢出时dump</p>
+<h4 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h4><p>-XX：+UsePrintGCDetails</p>
+<p>-XX：+UsePrintGCTimeStamps</p>
+<h3 id="类的加载"><a href="#类的加载" class="headerlink" title="类的加载"></a>类的加载</h3><ul>
+<li>创建类的实例</li>
+<li>拿到类的静态变量</li>
+<li>调用类的静态方法</li>
+<li>初始化子类</li>
+</ul>
+<h4 id="gc分析工具"><a href="#gc分析工具" class="headerlink" title="gc分析工具"></a>gc分析工具</h4><p>gceasy.io(在线)</p>
+<p>gcviewer(本地)</p>
+<p>1.JVM常用参数：</p>
+<p>-XX:+UseParallelGC</p>
+<p>-XX:+UseParNewGC</p>
+<p>-Xms</p>
+<p>-Xmx</p>
+<p>-Xmn</p>
+<p>-XX:+UsePrintGCDetails</p>
+<p>-XX:+UsePrintGCTimeStamps</p>
+<p>2.JVM常用的命令和工具</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">jps -l //查看java进程</span><br><span class="line"></span><br><span class="line">jstat -class pid 1000（时间） 10（次数）//查看类的信息</span><br><span class="line"></span><br><span class="line">jstat -gc pid &lt;interval&gt;  &lt;count&gt; //打印gc信息</span><br><span class="line"></span><br><span class="line">jstack pid //查看线程调用堆栈</span><br><span class="line"></span><br><span class="line">jmap -heap pid //打印java进程堆信息</span><br><span class="line"></span><br><span class="line">jmap -dump:file=xxx pid //dump堆到文件</span><br><span class="line"></span><br><span class="line">HeapDumpOnOutOfMemoryError //堆内存溢出时dump</span><br></pre></td></tr></table></figure>
+
+<p>jps：虚拟机进程状况工具</p>
+<p>jstat：虚拟机统计信息监视工具</p>
+<p>jinfo：java配置信息工具</p>
+<p>jmap：java内存映像工具</p>
+<p>jhat：虚拟机堆转储快照分析工具</p>
+<p>jstack：java堆栈跟踪工具</p>
+<p>jconsole：java监视与管理控制台</p>
+<p>visualVM：多合一故障处理工具</p>
+<p>3.</p>
+<p>方法区：类信息，常量，静态变量，即时编译后的代码</p>
+<p>堆：对象和数据实例</p>
+<p>运行时常量池：常量</p>
+<p>程序计数器：字节码的行号</p>
+<p>本地方法栈：native方法</p>
+<p>虚拟机栈：局部变量表，操作数栈，动态链接，出口</p>
+<p>4.</p>
+<p>堆： <code>-Xmx20m -Xms5m -XX:+HeapDumpOnOutOfMemoryError while(1){new Object();}</code></p>
+<p>方法区：<code>-XX:PermSize20M  -XX:MaxPermSize40M while(1){CglibVean bean=new CglibBean();}</code></p>
+<p>5.</p>
+<p>递归循环调用：StackOverflow</p>
+<p>查看死锁：jstack -l pid</p>
+<p>6.</p>
+<p>.<br>├─类加载器<br>├──装载<br>|   ├── 找到class文件并转换为流的形式<br>|   ├── 存储到各个区域<br>|   └── 创建Class对象<br>├──链接<br>|   ├── 验证<br>|   ├── 准备<br>|   └── 解析<br>├── 初始化<br>├─垃圾收集器<br>├── 方法区<br>└── 堆</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/02/Linux/" rel="prev" title="Linux概念">
+                Linux概念 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/author.jpg" alt="PPCoder">
+            
+              <p class="site-author-name" itemprop="name">PPCoder</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/ppCoder" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:dml_pig@163.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM"><span class="nav-number">1.</span> <span class="nav-text">JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java运行时数据区"><span class="nav-number">1.1.</span> <span class="nav-text">java运行时数据区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java内存模型"><span class="nav-number">1.2.</span> <span class="nav-text">java内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象已死吗？可达性分析"><span class="nav-number">1.3.</span> <span class="nav-text">对象已死吗？可达性分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SoftReference"><span class="nav-number">1.3.1.</span> <span class="nav-text">SoftReference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WeakReference"><span class="nav-number">1.3.2.</span> <span class="nav-text">WeakReference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PlantomReference"><span class="nav-number">1.3.3.</span> <span class="nav-text">PlantomReference</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机指令"><span class="nav-number">1.4.</span> <span class="nav-text">虚拟机指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改gc收集器"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">修改gc收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用命令"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#垃圾回收"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">垃圾回收</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类的加载"><span class="nav-number">1.4.1.</span> <span class="nav-text">类的加载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gc分析工具"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">gc分析工具</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PPCoder</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
