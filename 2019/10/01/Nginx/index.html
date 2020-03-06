@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="NginxNginx工作原理nginx 文件结构123456789101112131415161718192021222324252627...              #全局块events &amp;#123;         #events块   ...&amp;#125;http      #http块&amp;#123;    ...   #http全局块    server        #server块">
+<meta name="description" content="Nginx查找配置文件路径 /usr/local/sbin/nginx/nginx.conf Nginx工作原理nginx 文件结构123456789101112131415161718192021222324252627...              #全局块events &amp;#123;         #events块   ...&amp;#125;http      #http块&amp;#123;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx简单配置">
 <meta property="og:url" content="http://yoursite.com/2019/10/01/Nginx/index.html">
-<meta property="og:site_name" content="Yun">
-<meta property="og:description" content="NginxNginx工作原理nginx 文件结构123456789101112131415161718192021222324252627...              #全局块events &amp;#123;         #events块   ...&amp;#125;http      #http块&amp;#123;    ...   #http全局块    server        #server块">
+<meta property="og:site_name" content="皮仙儿的工作台">
+<meta property="og:description" content="Nginx查找配置文件路径 /usr/local/sbin/nginx/nginx.conf Nginx工作原理nginx 文件结构123456789101112131415161718192021222324252627...              #全局块events &amp;#123;         #events块   ...&amp;#125;http      #http块&amp;#123;">
 <meta property="og:locale" content="en">
 <meta property="og:image" content="d:%5Clearn%5Cnote%5Cpic%5C1564450067806.png">
-<meta property="og:updated_time" content="2019-12-26T08:12:04.905Z">
+<meta property="og:updated_time" content="2020-03-06T11:04:52.264Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx简单配置">
-<meta name="twitter:description" content="NginxNginx工作原理nginx 文件结构123456789101112131415161718192021222324252627...              #全局块events &amp;#123;         #events块   ...&amp;#125;http      #http块&amp;#123;    ...   #http全局块    server        #server块">
+<meta name="twitter:description" content="Nginx查找配置文件路径 /usr/local/sbin/nginx/nginx.conf Nginx工作原理nginx 文件结构123456789101112131415161718192021222324252627...              #全局块events &amp;#123;         #events块   ...&amp;#125;http      #http块&amp;#123;">
 <meta name="twitter:image" content="d:%5Clearn%5Cnote%5Cpic%5C1564450067806.png">
 
 
@@ -127,7 +127,7 @@
 
 
 
-  <title>Nginx简单配置 | Yun</title>
+  <title>Nginx简单配置 | 皮仙儿的工作台</title>
   
 
 
@@ -157,12 +157,12 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Yun</span>
+        <span class="site-title">皮仙儿的工作台</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
       
-        <p class="site-subtitle">Code and Love.</p>
+        <p class="site-subtitle">疫情期间也要努力呀</p>
       
   </div>
 
@@ -192,12 +192,12 @@
         </li>
       
         
-        <li class="menu-item menu-item-feeling">
-          <a href="/feeling/" rel="section">
+        <li class="menu-item menu-item-comments">
+          <a href="/comments/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-feeling"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-comment"></i> <br>
             
-            feeling
+            comments
           </a>
         </li>
       
@@ -205,7 +205,7 @@
         <li class="menu-item menu-item-notes">
           <a href="/notes/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-notes"></i> <br>
+              <i class="menu-item-icon fa fa-fw fa-sticky-note"></i> <br>
             
             notes
           </a>
@@ -263,7 +263,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Yun">
+      <meta itemprop="name" content="皮仙儿的工作台">
     </span>
 
     
@@ -323,7 +323,8 @@
       
         <a id="more"></a>
 
-<h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><h3 id="Nginx工作原理"><a href="#Nginx工作原理" class="headerlink" title="Nginx工作原理"></a>Nginx工作原理</h3><h4 id="nginx-文件结构"><a href="#nginx-文件结构" class="headerlink" title="nginx 文件结构"></a>nginx 文件结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">...              #全局块</span><br><span class="line"></span><br><span class="line">events &#123;         #events块</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http      #http块</span><br><span class="line">&#123;</span><br><span class="line">    ...   #http全局块</span><br><span class="line">    server        #server块</span><br><span class="line">    &#123; </span><br><span class="line">        ...       #server全局块</span><br><span class="line">        location [PATTERN]   #location块</span><br><span class="line">        &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">        location [PATTERN] </span><br><span class="line">        &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    server</span><br><span class="line">    &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...     #http全局块</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h1><p>查找配置文件路径 <code>/usr/local/sbin/nginx/nginx.conf</code></p>
+<h3 id="Nginx工作原理"><a href="#Nginx工作原理" class="headerlink" title="Nginx工作原理"></a>Nginx工作原理</h3><h4 id="nginx-文件结构"><a href="#nginx-文件结构" class="headerlink" title="nginx 文件结构"></a>nginx 文件结构</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">...              #全局块</span><br><span class="line"></span><br><span class="line">events &#123;         #events块</span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http      #http块</span><br><span class="line">&#123;</span><br><span class="line">    ...   #http全局块</span><br><span class="line">    server        #server块</span><br><span class="line">    &#123; </span><br><span class="line">        ...       #server全局块</span><br><span class="line">        location [PATTERN]   #location块</span><br><span class="line">        &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">        location [PATTERN] </span><br><span class="line">        &#123;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    server</span><br><span class="line">    &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...     #http全局块</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><strong>全局块</strong>：配置影响nginx全局的指令。一般有运行nginx服务器的用户组，nginx进程pid存放路径，日志存放路径，配置文件引入，允许生成worker process数等。</li>
@@ -530,6 +531,12 @@
                         <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
                   </span>
                 
+                  <span class="links-of-author-item">
+                    <a href="https://120.0.0.1:1009" target="_blank" title="工作站">
+                      
+                        <i class="fa fa-fw fa-notebook"></i>工作站</a>
+                  </span>
+                
             </div>
           
 
@@ -574,7 +581,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -595,6 +602,8 @@
   <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
+
+  <div class="footer-custom">互联网备案号 <a target="_blank" href="http://beian.miit.gov.cn">京ICP备19038966号</a></div>
 
 
         
