@@ -79,19 +79,21 @@
 
 
 
-<meta name="description" content="JVM  java运行时数据区java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。 方法区 堆 运行时常量池 程序计数器：native method is undefined 本地方法栈：native 虚拟机栈：thread–&amp;gt;VM stack, method–&amp;gt;frame  java内存模型主要目标是定义程序中各个变量的访问规则，即在虚拟机中将变">
+<meta name="description" content="JVM       内存管理类加载器  启动类加载器JVM运行时数据区java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。 方法区：Class信息，静态变量，final常量 堆：Java实例和数据 运行时常量池 程序计数器：native method is undefined 本地方法栈：native 虚拟机栈：thread–&amp;gt;VM stack, met">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM笔记">
 <meta property="og:url" content="http://yoursite.com/2019/07/17/JVM/index.html">
 <meta property="og:site_name" content="皮仙儿的工作台">
-<meta property="og:description" content="JVM  java运行时数据区java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。 方法区 堆 运行时常量池 程序计数器：native method is undefined 本地方法栈：native 虚拟机栈：thread–&amp;gt;VM stack, method–&amp;gt;frame  java内存模型主要目标是定义程序中各个变量的访问规则，即在虚拟机中将变">
+<meta property="og:description" content="JVM       内存管理类加载器  启动类加载器JVM运行时数据区java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。 方法区：Class信息，静态变量，final常量 堆：Java实例和数据 运行时常量池 程序计数器：native method is undefined 本地方法栈：native 虚拟机栈：thread–&amp;gt;VM stack, met">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="c:%5CUsers%5CHP%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1560514540657.png">
-<meta property="og:updated_time" content="2019-12-26T08:12:04.904Z">
+<meta property="og:image" content="http://yoursite.com/2019/07/17/JVM/pic/1560514540657.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/17/JVM/pic/image-20200727135740277.png">
+<meta property="og:image" content="http://yoursite.com/2019/07/17/JVM/pic/image-20200727141156506.png">
+<meta property="og:updated_time" content="2020-08-05T01:25:57.955Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM笔记">
-<meta name="twitter:description" content="JVM  java运行时数据区java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。 方法区 堆 运行时常量池 程序计数器：native method is undefined 本地方法栈：native 虚拟机栈：thread–&amp;gt;VM stack, method–&amp;gt;frame  java内存模型主要目标是定义程序中各个变量的访问规则，即在虚拟机中将变">
-<meta name="twitter:image" content="c:%5CUsers%5CHP%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1560514540657.png">
+<meta name="twitter:description" content="JVM       内存管理类加载器  启动类加载器JVM运行时数据区java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。 方法区：Class信息，静态变量，final常量 堆：Java实例和数据 运行时常量池 程序计数器：native method is undefined 本地方法栈：native 虚拟机栈：thread–&amp;gt;VM stack, met">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/17/JVM/pic/1560514540657.png">
 
 
 
@@ -323,17 +325,24 @@
       
         <a id="more"></a>
 
-<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><hr>
-<p><img src="C:%5CUsers%5CHP%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5C1560514540657.png" alt="1560514540657"></p>
-<h2 id="java运行时数据区"><a href="#java运行时数据区" class="headerlink" title="java运行时数据区"></a>java运行时数据区</h2><p>java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。</p>
-<p>方法区</p>
-<p>堆</p>
+<h1 id="JVM"><a href="#JVM" class="headerlink" title="JVM"></a>JVM</h1><p><img src="./pic/1560514540657.png" alt="1560514540657"></p>
+<img src="./pic/image-20200727135740277.png" alt="image-20200727135740277" style="zoom: 80%;">
+
+
+
+
+
+<h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><h3 id="类加载器"><a href="#类加载器" class="headerlink" title="类加载器"></a>类加载器</h3><img src="pic/image-20200727141156506.png" alt="image-20200727141156506" style="zoom:80%;">
+
+<h4 id="启动类加载器"><a href="#启动类加载器" class="headerlink" title="启动类加载器"></a>启动类加载器</h4><h3 id="JVM运行时数据区"><a href="#JVM运行时数据区" class="headerlink" title="JVM运行时数据区"></a>JVM运行时数据区</h3><p>java虚拟机在执行java程序的过程中会把它所管理的内存划分为若干个不同的数据区域。</p>
+<p>方法区：Class信息，静态变量，final常量</p>
+<p>堆：Java实例和数据</p>
 <p>运行时常量池</p>
 <p>程序计数器：native method is undefined</p>
 <p>本地方法栈：native</p>
 <p>虚拟机栈：thread–&gt;VM stack, method–&gt;frame</p>
 <hr>
-<h2 id="java内存模型"><a href="#java内存模型" class="headerlink" title="java内存模型"></a>java内存模型</h2><p>主要目标是定义程序中各个变量的访问规则，即在虚拟机中将变量存储到内存和从内存中去除变量这样的底层细节。</p>
+<h3 id="Java内存模型"><a href="#Java内存模型" class="headerlink" title="Java内存模型"></a>Java内存模型</h3><p>主要目标是定义程序中各个变量的访问规则，即在虚拟机中将变量存储到内存和从内存中去除变量这样的底层细节。</p>
 <p>方法区：（非堆，non-heap，metaspace（1.8元数据区），perm space（1.7永久代））</p>
 <p>堆：Old老年代，Young新生代（eden[8]，survivor[2]（from[1]，to[1]））</p>
 <p>java vm 视图监视器：jvisualvm</p>
@@ -349,20 +358,22 @@
 <li>CMS：concurrent Mark Sweep 更加关注回收<strong>停顿时间</strong> 标记-清除 初始标记–并发标记–重新标记–并发清理</li>
 <li>G1 分代收集（存在于新生代和老年代）空间整理（标记-整理） 停顿时间可设定</li>
 </ul>
-<p>1.关于java虚拟机栈</p>
-<p>thread–&gt;VM stack, method–&gt;frame</p>
-<p>由此可见，一个线程对应着一个虚拟机栈，一个方法对应着一个栈帧，由于栈是后进先出，正对应方法的调用规则，后调用的先返回。方法内部的局部变量等则自然保存在每个栈帧中。</p>
-<p>关于pc寄存器</p>
-<p>pc寄存器是java调试等程序中断操作，代码指令运行的行数，恢复时去这里查找。重要的一点就是，native方法是undefined</p>
-<p>2.运行时数据区是java程序执行过程中各种变量方法存储的逻辑区域，便于管理。</p>
-<p>内存结构模型则是实现这些逻辑区域的底层实现</p>
-<p>3.内存模型的划分</p>
-<p>方法区：（非堆，non-heap，metaspace（1.8元数据区），perm space（1.7永久代））</p>
-<p>堆：Old老年代，Young新生代（eden[8]，survivor[2]（from[1]，to[1]））</p>
-<p>4.确定对象为垃圾的算法：引用-标记，可达性分析</p>
-<p>5.常用的垃圾回收算法：标记-清除，标记-复制，标记-整理</p>
-<p>6.垃圾收集器：（<strong>好坏评判标准：吞吐量和停顿时间</strong>）</p>
-<ul>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><h3 id="对象已死吗？可达性分析"><a href="#对象已死吗？可达性分析" class="headerlink" title="对象已死吗？可达性分析"></a>对象已死吗？可达性分析</h3><p><strong>三种类型的引用定义了三种不同层次的可达性级别，由强到弱排列如下：</strong></p>
+<p>　　<strong>SoftReference &gt;</strong> <strong>WeakReference &gt; PhantomReference</strong></p>
+<p>　　越弱表示对垃圾回收器的限制越少，对象越容易被回收。</p>
+<h4 id="SoftReference"><a href="#SoftReference" class="headerlink" title="SoftReference"></a>SoftReference</h4><p>　　<strong>SoftReference</strong>用来实现一些内存敏感的缓存(Soft references are for implementing memory-sensitive caches)，只要内存空间足够，对象就会保持不被回收。</p>
+<p>　　反之，当宿主进程的内存空间不足时，对象就会被GC回收。</p>
+<p>　　所以SoftReference意味着：<strong>hold on until you can’t.</strong></p>
+<h4 id="WeakReference"><a href="#WeakReference" class="headerlink" title="WeakReference"></a>WeakReference</h4><p>　　<strong>W**</strong>eakReference<strong>可以用来实现一些规范化映射（</strong>WeakHashMap**），其中key或者value当它们不再被引用时可以自动被回收。</p>
+<p>　　当你想引用一个对象，但是这个对象有自己的生命周期，你不想介入这个对象的生命周期，这时候你就是用弱引用。</p>
+<p>　　这个引用不会在对象的垃圾回收判断中产生任何附加的影响。</p>
+<h4 id="PlantomReference"><a href="#PlantomReference" class="headerlink" title="PlantomReference"></a>PlantomReference</h4><p>　　<strong>PlantomReference</strong>和WeakReference一样，也不会介入引用对象的生命周期。</p>
+<p>　　PhantomReference用来调度一些预验清理动作，提供比Java清理机制更灵活的处理方式。（Phantom references are for scheduling pre-mortem cleanup actions in a more flexible way than is possible with the Java finalization mechanism.）</p>
+<p>　　PlantomReference比较特殊，它的get方法总是返回null，所以你得不到它引用的对象。</p>
+<p>　　它保存<strong>ReferenceQueue</strong>中的轨迹。</p>
+<p>　　它允许你知道对象何时从内存中移除。</p>
+<h3 id="垃圾回收机制"><a href="#垃圾回收机制" class="headerlink" title="垃圾回收机制"></a>垃圾回收机制</h3><h4 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记-清除算法"></a>标记-清除算法</h4><p>缺点：产生内存碎片</p>
+<h4 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h4><h4 id="分代回收"><a href="#分代回收" class="headerlink" title="分代回收"></a>分代回收</h4><h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><ul>
 <li>Serial 复制 单线程收集器，收集时暂停其他线程</li>
 <li>Serial Old ↑ 标记-整理</li>
 <li>ParNew 复制 多线程gc 收集时暂停其他线程</li>
@@ -371,23 +382,7 @@
 <li>CMS：（concurrent Mark Sweep）标记-清除  更加关注回收<strong>停顿时间</strong></li>
 <li>G1 分代收集（存在于新生代和老年代）空间整理（标记-整理） 停顿时间可设定</li>
 </ul>
-<p>7.吞吐量：当前时刻下，产生一定量的运算或者操作，也就是速率。收集器中就是说在大量的操作，很短的时间内将垃圾收集完成。</p>
-<p>停顿时间：当前作业操作被其他操作打断，到恢复前的一段时间就是停顿时间。即进行回收操作时，占用了其他操作的时间，对于其他操作来说，即产生了停顿时间</p>
-<h2 id="对象已死吗？可达性分析"><a href="#对象已死吗？可达性分析" class="headerlink" title="对象已死吗？可达性分析"></a>对象已死吗？可达性分析</h2><p><strong>三种类型的引用定义了三种不同层次的可达性级别，由强到弱排列如下：</strong></p>
-<p>　　<strong>SoftReference &gt;</strong> <strong>WeakReference &gt; PhantomReference</strong></p>
-<p>　　越弱表示对垃圾回收器的限制越少，对象越容易被回收。</p>
-<h3 id="SoftReference"><a href="#SoftReference" class="headerlink" title="SoftReference"></a>SoftReference</h3><p>　　<strong>SoftReference</strong>用来实现一些内存敏感的缓存(Soft references are for implementing memory-sensitive caches)，只要内存空间足够，对象就会保持不被回收。</p>
-<p>　　反之，当宿主进程的内存空间不足时，对象就会被GC回收。</p>
-<p>　　所以SoftReference意味着：<strong>hold on until you can’t.</strong></p>
-<h3 id="WeakReference"><a href="#WeakReference" class="headerlink" title="WeakReference"></a>WeakReference</h3><p>　　<strong>W**</strong>eakReference<strong>可以用来实现一些规范化映射（</strong>WeakHashMap**），其中key或者value当它们不再被引用时可以自动被回收。</p>
-<p>　　当你想引用一个对象，但是这个对象有自己的生命周期，你不想介入这个对象的生命周期，这时候你就是用弱引用。</p>
-<p>　　这个引用不会在对象的垃圾回收判断中产生任何附加的影响。</p>
-<h3 id="PlantomReference"><a href="#PlantomReference" class="headerlink" title="PlantomReference"></a>PlantomReference</h3><p>　　<strong>PlantomReference</strong>和WeakReference一样，也不会介入引用对象的生命周期。</p>
-<p>　　PhantomReference用来调度一些预验清理动作，提供比Java清理机制更灵活的处理方式。（Phantom references are for scheduling pre-mortem cleanup actions in a more flexible way than is possible with the Java finalization mechanism.）</p>
-<p>　　PlantomReference比较特殊，它的get方法总是返回null，所以你得不到它引用的对象。</p>
-<p>　　它保存<strong>ReferenceQueue</strong>中的轨迹。</p>
-<p>　　它允许你知道对象何时从内存中移除。</p>
-<h2 id="虚拟机指令"><a href="#虚拟机指令" class="headerlink" title="虚拟机指令"></a>虚拟机指令</h2><h4 id="修改gc收集器"><a href="#修改gc收集器" class="headerlink" title="修改gc收集器"></a>修改gc收集器</h4><p>tomcat的catalina.sh配置文件 JAVA_OPTS</p>
+<h3 id="虚拟机指令"><a href="#虚拟机指令" class="headerlink" title="虚拟机指令"></a>虚拟机指令</h3><h4 id="修改gc收集器"><a href="#修改gc收集器" class="headerlink" title="修改gc收集器"></a>修改gc收集器</h4><p>tomcat的catalina.sh配置文件 JAVA_OPTS</p>
 <p>jinfo -flags 参数 pid//实时修改</p>
 <p>Java -XX：参数 -jar xxx.jar //启动时设置</p>
 <h4 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h4><p>jps -l //查看java进程</p>
@@ -397,7 +392,7 @@
 <p>jmap -heap pid</p>
 <p>jmap </p>
 <p>HeapDumpOnOutOfMemoryError //堆内存溢出时dump</p>
-<h4 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h4><p>-XX：+UsePrintGCDetails</p>
+<h4 id="垃圾回收-1"><a href="#垃圾回收-1" class="headerlink" title="垃圾回收"></a>垃圾回收</h4><p>-XX：+UsePrintGCDetails</p>
 <p>-XX：+UsePrintGCTimeStamps</p>
 <h3 id="类的加载"><a href="#类的加载" class="headerlink" title="类的加载"></a>类的加载</h3><ul>
 <li>创建类的实例</li>
@@ -441,6 +436,30 @@
 <p>查看死锁：jstack -l pid</p>
 <p>6.</p>
 <p>.<br>├─类加载器<br>├──装载<br>|   ├── 找到class文件并转换为流的形式<br>|   ├── 存储到各个区域<br>|   └── 创建Class对象<br>├──链接<br>|   ├── 验证<br>|   ├── 准备<br>|   └── 解析<br>├── 初始化<br>├─垃圾收集器<br>├── 方法区<br>└── 堆</p>
+<h2 id="常见面试题"><a href="#常见面试题" class="headerlink" title="常见面试题"></a>常见面试题</h2><p>1.关于java虚拟机栈</p>
+<p>thread–&gt;VM stack, method–&gt;frame</p>
+<p>由此可见，一个线程对应着一个虚拟机栈，一个方法对应着一个栈帧，由于栈是后进先出，正对应方法的调用规则，后调用的先返回。方法内部的局部变量等则自然保存在每个栈帧中。</p>
+<p>关于pc寄存器</p>
+<p>pc寄存器是java调试等程序中断操作，代码指令运行的行数，恢复时去这里查找。重要的一点就是，native方法是undefined</p>
+<p>2.运行时数据区是java程序执行过程中各种变量方法存储的逻辑区域，便于管理。</p>
+<p>内存结构模型则是实现这些逻辑区域的底层实现</p>
+<p>3.内存模型的划分</p>
+<p>方法区：（非堆，non-heap，metaspace（1.8元数据区），perm space（1.7永久代））</p>
+<p>堆：Old老年代，Young新生代（eden[8]，survivor[2]（from[1]，to[1]））</p>
+<p>4.确定对象为垃圾的算法：引用-标记，可达性分析</p>
+<p>5.常用的垃圾回收算法：标记-清除，标记-复制，标记-整理</p>
+<p>6.垃圾收集器：（<strong>好坏评判标准：吞吐量和停顿时间</strong>）</p>
+<ul>
+<li>Serial 复制 单线程收集器，收集时暂停其他线程</li>
+<li>Serial Old ↑ 标记-整理</li>
+<li>ParNew 复制 多线程gc 收集时暂停其他线程</li>
+<li>Parallel Scanvenge 复制 多线程并行gc 保证<strong>吞吐量优先</strong></li>
+<li>Parallel Old↑ 标记-整理</li>
+<li>CMS：（concurrent Mark Sweep）标记-清除  更加关注回收<strong>停顿时间</strong></li>
+<li>G1 分代收集（存在于新生代和老年代）空间整理（标记-整理） 停顿时间可设定</li>
+</ul>
+<p>7.吞吐量：当前时刻下，产生一定量的运算或者操作，也就是速率。收集器中就是说在大量的操作，很短的时间内将垃圾收集完成。</p>
+<p>停顿时间：当前作业操作被其他操作打断，到恢复前的一段时间就是停顿时间。即进行回收操作时，占用了其他操作的时间，对于其他操作来说，即产生了停顿时间</p>
 
       
     </div>
@@ -552,7 +571,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -570,6 +589,12 @@
             <div class="links-of-author motion-element">
                 
                   <span class="links-of-author-item">
+                    <a href="http://ppgoder.cn:1234" target="_blank" title="云计算">
+                      
+                        <i class="fa fa-fw fa-skype"></i>云计算</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
                     <a href="https://github.com/ppCoder" target="_blank" title="GitHub">
                       
                         <i class="fa fa-fw fa-github"></i>GitHub</a>
@@ -579,12 +604,6 @@
                     <a href="mailto:dml_pig@163.com" target="_blank" title="E-Mail">
                       
                         <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-                  </span>
-                
-                  <span class="links-of-author-item">
-                    <a href="https://120.0.0.1:1009" target="_blank" title="工作站">
-                      
-                        <i class="fa fa-fw fa-notebook"></i>工作站</a>
                   </span>
                 
             </div>
@@ -611,7 +630,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM"><span class="nav-number">1.</span> <span class="nav-text">JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java运行时数据区"><span class="nav-number">1.1.</span> <span class="nav-text">java运行时数据区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java内存模型"><span class="nav-number">1.2.</span> <span class="nav-text">java内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对象已死吗？可达性分析"><span class="nav-number">1.3.</span> <span class="nav-text">对象已死吗？可达性分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SoftReference"><span class="nav-number">1.3.1.</span> <span class="nav-text">SoftReference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WeakReference"><span class="nav-number">1.3.2.</span> <span class="nav-text">WeakReference</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PlantomReference"><span class="nav-number">1.3.3.</span> <span class="nav-text">PlantomReference</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机指令"><span class="nav-number">1.4.</span> <span class="nav-text">虚拟机指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改gc收集器"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">修改gc收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用命令"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#垃圾回收"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">垃圾回收</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类的加载"><span class="nav-number">1.4.1.</span> <span class="nav-text">类的加载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gc分析工具"><span class="nav-number">1.4.1.1.</span> <span class="nav-text">gc分析工具</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM"><span class="nav-number">1.</span> <span class="nav-text">JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#内存管理"><span class="nav-number">1.1.</span> <span class="nav-text">内存管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类加载器"><span class="nav-number">1.1.1.</span> <span class="nav-text">类加载器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#启动类加载器"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">启动类加载器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JVM运行时数据区"><span class="nav-number">1.1.2.</span> <span class="nav-text">JVM运行时数据区</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Java内存模型"><span class="nav-number">1.1.3.</span> <span class="nav-text">Java内存模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾回收"><span class="nav-number">1.2.</span> <span class="nav-text">垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#对象已死吗？可达性分析"><span class="nav-number">1.2.1.</span> <span class="nav-text">对象已死吗？可达性分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SoftReference"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">SoftReference</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WeakReference"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">WeakReference</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#PlantomReference"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">PlantomReference</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垃圾回收机制"><span class="nav-number">1.2.2.</span> <span class="nav-text">垃圾回收机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标记-清除算法"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">标记-清除算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复制算法"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">复制算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分代回收"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">分代回收</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#垃圾收集器"><span class="nav-number">1.2.3.</span> <span class="nav-text">垃圾收集器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟机指令"><span class="nav-number">1.2.4.</span> <span class="nav-text">虚拟机指令</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改gc收集器"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">修改gc收集器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用命令"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#垃圾回收-1"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">垃圾回收</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类的加载"><span class="nav-number">1.2.5.</span> <span class="nav-text">类的加载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#gc分析工具"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">gc分析工具</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见面试题"><span class="nav-number">1.3.</span> <span class="nav-text">常见面试题</span></a></li></ol></li></ol></div>
             
 
           </div>
