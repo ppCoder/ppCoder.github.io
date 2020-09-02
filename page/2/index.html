@@ -249,6 +249,136 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/03/SpringBoot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PPCoder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="皮仙儿的工作台">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/10/03/SpringBoot/" itemprop="url">SpringBoot笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-03T13:18:33+08:00">
+                2019-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          
+
+SpringBootSpringBoot思想：约定大于配置
+什么是SpringBoot
+SpringBoot是一个框架，一种全新的编程规范，他的产生简化了框架的使用，所谓简化是指简化了Spring众多框架中所需的大量且繁琐的配置文件，所以 SpringBoot是一个服务于框架的框架，服务范围是简
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/10/03/SpringBoot/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/02/Spring/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -642,7 +772,7 @@ Docker is the company driving the container movement and the only containe
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/26/SingleServiceDemo/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/26/原子服务配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="PPCoder">
@@ -661,7 +791,7 @@ Docker is the company driving the container movement and the only containe
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/09/26/SingleServiceDemo/" itemprop="url">一个小Demo的尝试</a></h1>
+                <a class="post-title-link" href="/2019/09/26/原子服务配置/" itemprop="url">原子服务增删改查模板</a></h1>
         
 
         <div class="post-meta">
@@ -729,7 +859,7 @@ Docker is the company driving the container movement and the only containe
           ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/09/26/SingleServiceDemo/#more" rel="contents">
+            <a class="btn" href="/2019/09/26/原子服务配置/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1109,7 +1239,80 @@ Docker is the company driving the container movement and the only container plat
 
       
         
-          <h3 id="DevOps"><a href="#DevOps" class="headerlink" title="DevOps"></a><code>DevOps</code></h3><p>是一组过程，方法与系统的统称，用于促进开发(应用程序/软件工程)，技术运营和质量保障部门之间的沟通，协作与整合。</p>
+          <h1 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h1><p>内部的一些核心服务，性能要求比较高的可以采用RPC，对外服务的一般可以采用REST</p>
+<h2 id="模式"><a href="#模式" class="headerlink" title="模式"></a>模式</h2><h3 id="SOA–面向消息"><a href="#SOA–面向消息" class="headerlink" title="SOA–面向消息"></a>SOA–面向消息</h3><p>–&gt; Service-Oriented Architecture：面向服务的架构</p>
+<p>包含多个服务，服务之间通过相互依赖最终提供一系列的功能，一个服务通常以独立的形式存在与操作系统进程中。各个服务之间通过网络调用</p>
+<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><h3 id="RPC–面向过程"><a href="#RPC–面向过程" class="headerlink" title="RPC–面向过程"></a>RPC–面向过程</h3><p>–&gt; Remote Procedure Call Protocol：远程过程调用协议</p>
+<p>通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议</p>
+<ol>
+<li>解决服务之间的调用问题</li>
+<li>服务之间调用要像本地调用一样方便</li>
+<li>一般都架在TCP/IP协议上</li>
+</ol>
+<h5 id="RPC是分布式架构的核心"><a href="#RPC是分布式架构的核心" class="headerlink" title="RPC是分布式架构的核心"></a>RPC是分布式架构的核心</h5><p>响应式划分：</p>
+<ul>
+<li><p>同步调用：客户端调用服务方方法，等待直到服务方返回结果或者超时，再继续自己的操作</p>
+<p><code>WebService</code>/<code>RMI</code></p>
+</li>
+<li><p>异步调用：客户端把消息发送给中间件，不再等待服务端返回，直接继续自己的操作</p>
+<p><code>JMS</code>中间件：<code>ActiveMQ</code>，<code>Kafka</code>，<code>RocketMQ</code></p>
+</li>
+</ul>
+<h5 id="RPC优点"><a href="#RPC优点" class="headerlink" title="RPC优点"></a>RPC优点</h5><ol>
+<li>TCP不用经过3次握手，减少了网络开销</li>
+</ol>
+<h3 id="RESTful–面向资源"><a href="#RESTful–面向资源" class="headerlink" title="RESTful–面向资源"></a>RESTful–面向资源</h3><blockquote>
+<p>Representation State Transfer：表述性状态传递，软件架构风格</p>
+<p>通过HTTP协议定义的通用方法（GET，PUT，DELETE，POST），以URI对网络资源进行唯一标识，响应端根据请求端的不同需求，通过无状态通信，对其请求的资源进行表述</p>
+</blockquote>
+<h5 id="REST架构的主要原则"><a href="#REST架构的主要原则" class="headerlink" title="REST架构的主要原则"></a>REST架构的主要原则</h5><ol>
+<li>网络上的所有事物都被抽象为资源</li>
+<li>每个资源都有一个唯一的资源标识符</li>
+<li>同一个资源具有多种表现形式（xml，json等）</li>
+<li>对资源的各种操作不会改变资源标识符</li>
+<li>所有的操作都是无状态的</li>
+</ol>
+<h5 id="无状态通信"><a href="#无状态通信" class="headerlink" title="无状态通信"></a>无状态通信</h5><p>无状态增强了系统的拓展性</p>
+<blockquote>
+<p>服务端不保存任何与特定HTTP请求相关的资源，应用状态必须由请求放在请求过程中提供。</p>
+<p>要求在网络通信过程中，任意一个Web请求必须<strong>与其他请求隔离</strong>，当请求端提出请求时，请求本身包含了响应端为响应这一请求所需的全部信息</p>
+</blockquote>
+<h5 id="RESTful用法"><a href="#RESTful用法" class="headerlink" title="RESTful用法"></a>RESTful用法</h5><ul>
+<li>GET：查询  幂等  安全</li>
+<li>POST：增加  不幂等  不安全</li>
+<li>PUT：修改  幂等  不安全</li>
+<li>DELETE：删除  幂等  不安全</li>
+</ul>
+<p>幂等性：对同一REST接口进行多次访问，得到的资源状态是相同的</p>
+<p>安全性：对该REST接口访问，不会使服务器端资源的状态发生改变</p>
+<h4 id="REST三要素"><a href="#REST三要素" class="headerlink" title="REST三要素"></a>REST三要素</h4><ol>
+<li>唯一的资源标识</li>
+<li>简单的方法</li>
+<li>一定的表达方式</li>
+</ol>
+<h3 id="SOAP–简单对象访问协议"><a href="#SOAP–简单对象访问协议" class="headerlink" title="SOAP–简单对象访问协议"></a>SOAP–简单对象访问协议</h3><p>–&gt; Simple Object Access Protocol：简单对象访问协议</p>
+<ol>
+<li>分布式环境的，轻量级的，基于XML进行信息交换的通信协议</li>
+<li>可以在任何传输协议上使用</li>
+<li>SOAP=RPC+HTTP+XML</li>
+</ol>
+<h5 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h5><ol>
+<li>SOAP协议对于消息体和消息头都有定义，规范，安全</li>
+<li>由于各种需求不断扩充其本身协议的内容，导致SOAP处理方面的性能有所下降，</li>
+<li>SOAP也是基于HTTP协议，但是提供了session，cookie机制使得SOAP有状态，从而支持需要有状态的业务</li>
+</ol>
+<h3 id="XML-RPC"><a href="#XML-RPC" class="headerlink" title="XML-RPC"></a>XML-RPC</h3><p>一个远程过程调用的分布式计算协议</p>
+<p>通过XML将调用函数封装，并使用HTTP协议作为传送机制</p>
+<h2 id="接口设计"><a href="#接口设计" class="headerlink" title="接口设计"></a>接口设计</h2><h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><blockquote>
+<p>应用程序编程接口</p>
+<p>预先定义的函数，目的是作为”介面“沟通两个不同的东西，提供应用程序与开发人员基于某软件或硬件得以访问一组例程的能力，而又无需访问源码，或理解内部工作机制的细节</p>
+</blockquote>
+<h3 id="SDK"><a href="#SDK" class="headerlink" title="SDK"></a>SDK</h3><blockquote>
+<p>软件开发工具包</p>
+<p>被软件工程师用于为特定的软件包，软件框架，硬件平台，操作系统等建立应用软件的开发工具的集合。通俗点是指由第三方服务商提供的实现软件产品某项功能的工具包</p>
+</blockquote>
+<h3 id="SDK和API的区别"><a href="#SDK和API的区别" class="headerlink" title="SDK和API的区别"></a>SDK和API的区别</h3><p>SDK相当于开发集成工具环境，API就是数据接口。在SDK环境下调用API数据</p>
+<h3 id="DevOps"><a href="#DevOps" class="headerlink" title="DevOps"></a><code>DevOps</code></h3><p>是一组过程，方法与系统的统称，用于促进开发(应用程序/软件工程)，技术运营和质量保障部门之间的沟通，协作与整合。</p>
 <p>它的出现是由于软件行业日益清晰地认识到：为了按时交付软件产品和服务，开发和运营工作必须紧密合作</p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1406,133 +1609,6 @@ Docker is the company driving the container movement and the only container plat
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/06/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="PPCoder">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/author.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="皮仙儿的工作台">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/09/06/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-06T19:46:41+08:00">
-                2019-09-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          Welcome!The website is stored some my markdown, and sometimes i might refer other’s words directly. so i need transfer my note to original works.
-Then
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/09/06/hello-world/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1585,7 +1661,7 @@ Then
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
