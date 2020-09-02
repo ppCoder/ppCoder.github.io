@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="分支预测定义： 所谓分支预测，即在CPU的运行会预测向哪个分支前进 原因： 因为现代处理器有很长的流水线，启动和制动都需要很长的时间，如果通过预测行走路线，则会节省很多时间   CPU在遭遇分支时，CPU的分支预测器根据历史模式预测可能性最高的分支，  然后依靠指令流水线实现一边计算分支中的判断条件  一边已经进入最有可能的分支开始了接下来的“投机性计算”   如果最后预测错误，那么投机性计算结果">
+<meta name="description" content="分支预测定义： 所谓分支预测，即在CPU的运行会预测向哪个分支前进 原因： 因为现代处理器有很长的流水线，启动和制动都需要很长的时间，如果通过预测行走路线，则会节省很多时间   CPU在遭遇分支时，CPU的分支预测器根据历史模式预测可能性最高的分支，  然后依靠指令流水线实现一边计算分支中的判断条件  一边已经进入最有可能的分支开始了接下来的“投机性计算”   如果最后预测错误，那么投机性">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CPU对循环语句的优化方案-分支预测">
 <meta property="og:url" content="http://yoursite.com/2019/09/10/分支预测/index.html">
 <meta property="og:site_name" content="皮仙儿的工作台">
-<meta property="og:description" content="分支预测定义： 所谓分支预测，即在CPU的运行会预测向哪个分支前进 原因： 因为现代处理器有很长的流水线，启动和制动都需要很长的时间，如果通过预测行走路线，则会节省很多时间   CPU在遭遇分支时，CPU的分支预测器根据历史模式预测可能性最高的分支，  然后依靠指令流水线实现一边计算分支中的判断条件  一边已经进入最有可能的分支开始了接下来的“投机性计算”   如果最后预测错误，那么投机性计算结果">
+<meta property="og:description" content="分支预测定义： 所谓分支预测，即在CPU的运行会预测向哪个分支前进 原因： 因为现代处理器有很长的流水线，启动和制动都需要很长的时间，如果通过预测行走路线，则会节省很多时间   CPU在遭遇分支时，CPU的分支预测器根据历史模式预测可能性最高的分支，  然后依靠指令流水线实现一边计算分支中的判断条件  一边已经进入最有可能的分支开始了接下来的“投机性计算”   如果最后预测错误，那么投机性">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-09-24T14:44:20.347Z">
+<meta property="og:updated_time" content="2020-09-02T12:37:06.181Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CPU对循环语句的优化方案-分支预测">
-<meta name="twitter:description" content="分支预测定义： 所谓分支预测，即在CPU的运行会预测向哪个分支前进 原因： 因为现代处理器有很长的流水线，启动和制动都需要很长的时间，如果通过预测行走路线，则会节省很多时间   CPU在遭遇分支时，CPU的分支预测器根据历史模式预测可能性最高的分支，  然后依靠指令流水线实现一边计算分支中的判断条件  一边已经进入最有可能的分支开始了接下来的“投机性计算”   如果最后预测错误，那么投机性计算结果">
+<meta name="twitter:description" content="分支预测定义： 所谓分支预测，即在CPU的运行会预测向哪个分支前进 原因： 因为现代处理器有很长的流水线，启动和制动都需要很长的时间，如果通过预测行走路线，则会节省很多时间   CPU在遭遇分支时，CPU的分支预测器根据历史模式预测可能性最高的分支，  然后依靠指令流水线实现一边计算分支中的判断条件  一边已经进入最有可能的分支开始了接下来的“投机性计算”   如果最后预测错误，那么投机性">
 
 
 
@@ -319,7 +319,11 @@
       
 
       
-        <h3 id="分支预测"><a href="#分支预测" class="headerlink" title="分支预测"></a>分支预测</h3><p>定义： 所谓分支预测，即在CPU的运行会预测向哪个分支前进</p>
+        <a id="more"></a>
+
+
+
+<h3 id="分支预测"><a href="#分支预测" class="headerlink" title="分支预测"></a>分支预测</h3><p>定义： 所谓分支预测，即在CPU的运行会预测向哪个分支前进</p>
 <p>原因： 因为现代处理器有很长的流水线，启动和制动都需要很长的时间，如果通过预测行走路线，则会节省很多时间</p>
 <blockquote>
 <p> CPU在遭遇分支时，CPU的分支预测器根据历史模式预测可能性最高的分支，</p>
@@ -447,7 +451,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

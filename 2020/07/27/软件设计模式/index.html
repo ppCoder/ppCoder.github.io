@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="策略模式 定义：定义一系列的算法，把每个算法封装起来，并且使他们可相互替换 方法：1. 抽象策略接口 2. 实现每个策略impl 3. 上转型应用策略">
+<meta name="description" content="策略模式 定义：定义一系列的算法，把每个算法封装起来，并且使他们可相互替换 方法：1. 抽象策略接口 2. 实现每个策略impl 3. 上转型应用策略  模板模式线程创建的实现模式，抛出一个任务接口供你实现， 开始进行的start实现逻辑final不允许修改 123456789101112131415161718192021222324252627282930public class Temp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="软件设计模式">
 <meta property="og:url" content="http://yoursite.com/2020/07/27/软件设计模式/index.html">
 <meta property="og:site_name" content="皮仙儿的工作台">
-<meta property="og:description" content="策略模式 定义：定义一系列的算法，把每个算法封装起来，并且使他们可相互替换 方法：1. 抽象策略接口 2. 实现每个策略impl 3. 上转型应用策略">
+<meta property="og:description" content="策略模式 定义：定义一系列的算法，把每个算法封装起来，并且使他们可相互替换 方法：1. 抽象策略接口 2. 实现每个策略impl 3. 上转型应用策略  模板模式线程创建的实现模式，抛出一个任务接口供你实现， 开始进行的start实现逻辑final不允许修改 123456789101112131415161718192021222324252627282930public class Temp">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-08-05T01:25:57.978Z">
+<meta property="og:updated_time" content="2020-09-02T12:37:06.181Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="软件设计模式">
-<meta name="twitter:description" content="策略模式 定义：定义一系列的算法，把每个算法封装起来，并且使他们可相互替换 方法：1. 抽象策略接口 2. 实现每个策略impl 3. 上转型应用策略">
+<meta name="twitter:description" content="策略模式 定义：定义一系列的算法，把每个算法封装起来，并且使他们可相互替换 方法：1. 抽象策略接口 2. 实现每个策略impl 3. 上转型应用策略  模板模式线程创建的实现模式，抛出一个任务接口供你实现， 开始进行的start实现逻辑final不允许修改 123456789101112131415161718192021222324252627282930public class Temp">
 
 
 
@@ -319,10 +319,15 @@
       
 
       
-        <h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><blockquote>
+        <a id="more"></a>
+
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><blockquote>
 <p>定义：定义一系列的算法，把每个算法封装起来，并且使他们可相互替换</p>
 <p>方法：1. 抽象策略接口 2. 实现每个策略impl 3. 上转型应用策略</p>
 </blockquote>
+<h3 id="模板模式"><a href="#模板模式" class="headerlink" title="模板模式"></a>模板模式</h3><p>线程创建的实现模式，抛出一个任务接口供你实现， 开始进行的start实现逻辑final不允许修改</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TemplateMethod</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">(String message)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"##########"</span>);</span><br><span class="line">        wrapPrint(message);</span><br><span class="line">        System.out.println(<span class="string">"##########"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">wrapPrint</span><span class="params">(String message)</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        TemplateMethod t1 = <span class="keyword">new</span> TemplateMethod()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">wrapPrint</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"*"</span>+message+<span class="string">"*"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        t1.print(<span class="string">"Hello 1"</span>);</span><br><span class="line"></span><br><span class="line">        TemplateMethod t2 = <span class="keyword">new</span> TemplateMethod()&#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">wrapPrint</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">                System.out.println(<span class="string">"*"</span>+message+<span class="string">"*"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        t2.print(<span class="string">"Hello 2"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -438,7 +443,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -497,7 +502,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#策略模式"><span class="nav-number">1.</span> <span class="nav-text">策略模式</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#策略模式"><span class="nav-number">1.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#模板模式"><span class="nav-number">2.</span> <span class="nav-text">模板模式</span></a></li></ol></div>
             
 
           </div>
