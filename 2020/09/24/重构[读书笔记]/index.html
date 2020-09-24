@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEADAQS 数据安全问题：  可见性  JMM[Java内存模型] volitale synvhronize lock final  有序性  指令重排序 volatile synchronized lock  原子性  Lock  互斥  保存等待序列 存储序列的容器：List，Array，Map，Queue，链表  阻塞 wait">
+<meta name="description" content="第一个案例  去除临时变量  重构手法：  Extract Method Move Method Replace Conditional with Polymorphism Self Encapsulate Field Replace Type Code with State/Strategy  哪些代码要进行重构  Duplicated Code（重复代码） Long Method（过长函数 ）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="皮仙儿的工作台">
-<meta property="og:url" content="http://yoursite.com/2020/09/05/并发编程/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/09/24/重构[读书笔记]/index.html">
 <meta property="og:site_name" content="皮仙儿的工作台">
-<meta property="og:description" content="&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEADAQS 数据安全问题：  可见性  JMM[Java内存模型] volitale synvhronize lock final  有序性  指令重排序 volatile synchronized lock  原子性  Lock  互斥  保存等待序列 存储序列的容器：List，Array，Map，Queue，链表  阻塞 wait">
+<meta property="og:description" content="第一个案例  去除临时变量  重构手法：  Extract Method Move Method Replace Conditional with Polymorphism Self Encapsulate Field Replace Type Code with State/Strategy  哪些代码要进行重构  Duplicated Code（重复代码） Long Method（过长函数 ）">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-09-05T02:31:52.712Z">
+<meta property="og:updated_time" content="2020-09-24T13:04:53.821Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="皮仙儿的工作台">
-<meta name="twitter:description" content="&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEADAQS 数据安全问题：  可见性  JMM[Java内存模型] volitale synvhronize lock final  有序性  指令重排序 volatile synchronized lock  原子性  Lock  互斥  保存等待序列 存储序列的容器：List，Array，Map，Queue，链表  阻塞 wait">
+<meta name="twitter:description" content="第一个案例  去除临时变量  重构手法：  Extract Method Move Method Replace Conditional with Polymorphism Self Encapsulate Field Replace Type Code with State/Strategy  哪些代码要进行重构  Duplicated Code（重复代码） Long Method（过长函数 ）">
 
 
 
@@ -119,7 +119,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2020/09/05/并发编程/">
+  <link rel="canonical" href="http://yoursite.com/2020/09/24/重构[读书笔记]/">
 
 
 
@@ -252,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/05/并发编程/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/24/重构[读书笔记]/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="PPCoder">
@@ -281,8 +281,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-05T10:31:52+08:00">
-                2020-09-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-24T21:04:53+08:00">
+                2020-09-24
               </time>
             
 
@@ -319,74 +319,46 @@
       
 
       
-        <p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD<br>AQS</p>
-<p>数据安全问题：</p>
-<ol>
-<li>可见性</li>
-</ol>
-<p>JMM[Java内存模型] volitale synvhronize lock final</p>
-<ol start="2">
-<li>有序性</li>
-</ol>
-<p>指令重排序 volatile synchronized lock</p>
-<ol start="3">
-<li>原子性</li>
-</ol>
-<p>Lock</p>
-<ol>
-<li><p>互斥</p>
-</li>
-<li><p>保存等待序列</p>
-<p>存储序列的容器：List，Array，Map，Queue，链表</p>
-</li>
-<li><p>阻塞</p>
-<p>wait</p>
-<p>conditional：await</p>
-<p>LockSupport：park</p>
-</li>
-</ol>
-<p>UnLock</p>
-<ol>
-<li>释放</li>
-</ol>
-<ol start="2">
-<li><p>唤醒</p>
-<p>unpark</p>
-</li>
-</ol>
-<h2 id><a href="#" class="headerlink" title="======="></a>=======</h2><p>title: 并发编程初级<br>author: ppgoder</p>
-<h2 id="date-2020-09-02-16-12-22"><a href="#date-2020-09-02-16-12-22" class="headerlink" title="date: 2020-09-02 16:12:22"></a>date: 2020-09-02 16:12:22</h2><a id="more"></a>
-
-
-
-<h3 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h3><h4 id="新建线程"><a href="#新建线程" class="headerlink" title="新建线程"></a>新建线程</h4><p><code>Tips：Run方法是Thread类用模板模式实现</code></p>
-<h5 id="普通匿名内部类"><a href="#普通匿名内部类" class="headerlink" title="普通匿名内部类"></a>普通匿名内部类</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//普通匿名内部类创建</span></span><br><span class="line"><span class="keyword">new</span> Thread()&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        enjoyMusic();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;.start();</span><br></pre></td></tr></table></figure>
-
-<h5 id="Lambda表达式创建"><a href="#Lambda表达式创建" class="headerlink" title="Lambda表达式创建"></a>Lambda表达式创建</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//lambda表达式创建</span></span><br><span class="line"><span class="keyword">new</span> Thread(TryConcurrency::enjoyMusic).start();</span><br></pre></td></tr></table></figure>
-
-<h5 id="继承Thread类"><a href="#继承Thread类" class="headerlink" title="继承Thread类"></a>继承Thread类</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//继承Thread类</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TicketWindow</span> <span class="keyword">extends</span> <span class="title">Thread</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> index = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TicketWindow</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(index &lt;= <span class="number">50</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">"柜台："</span>+name+<span class="string">" 当前的号码是: "</span>+(index++));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="减少上下文切换"><a href="#减少上下文切换" class="headerlink" title="减少上下文切换"></a>减少上下文切换</h3><ul>
-<li>无锁并发编程：避免使用锁</li>
-<li>CAS算法</li>
-<li>使用最少线程</li>
-<li>协程</li>
+        <p>第一个案例</p>
+<ul>
+<li>去除临时变量</li>
 </ul>
+<p>重构手法：</p>
+<ul>
+<li>Extract Method</li>
+<li>Move Method</li>
+<li>Replace Conditional with Polymorphism</li>
+<li>Self Encapsulate Field</li>
+<li>Replace Type Code with State/Strategy</li>
+</ul>
+<p>哪些代码要进行重构</p>
+<ul>
+<li>Duplicated Code（重复代码）</li>
+<li>Long Method（过长函数 ）</li>
+<li>Large Class（过大的类）</li>
+<li>Long Parameter List（过长参数列）</li>
+<li>Divergent Change（发散式变化）</li>
+<li>Shotgun Surgery（霰弹式修改）</li>
+<li>Feature Envy（依恋情结）</li>
+<li>Data Clumps（数据泥团）</li>
+</ul>
+<p>你要提炼那一段代码？</p>
+<ol>
+<li>注释</li>
+</ol>
+<p>要积极的分解函数，把你需要写的注释，转换成函数名称，足够长的函数名称来解释其用途。</p>
 <blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>0edf85048e680924d34aaacfa6a0b945ae52902b</p>
+<p>只要有一行代码需要注释才能读懂，那就需要转换成一个函数 </p>
 </blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<ol start="2">
+<li>表达式和循环</li>
+</ol>
+<p>使用<code>Decompose Conditional</code>处理条件表达式</p>
+<p>将循环提炼到一个独立函数中</p>
+<ol start="3">
+<li>字段和参数</li>
+</ol>
+<p>字段和参数过长，应该将其提炼</p>
 
       
     </div>
@@ -471,17 +443,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -498,7 +461,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -547,22 +510,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">=======</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#date-2020-09-02-16-12-22"><span class="nav-number">2.</span> <span class="nav-text">date: 2020-09-02 16:12:22</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#线程"><span class="nav-number">2.1.</span> <span class="nav-text">线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#新建线程"><span class="nav-number">2.1.1.</span> <span class="nav-text">新建线程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#普通匿名内部类"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">普通匿名内部类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Lambda表达式创建"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">Lambda表达式创建</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#继承Thread类"><span class="nav-number">2.1.1.3.</span> <span class="nav-text">继承Thread类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#减少上下文切换"><span class="nav-number">2.2.</span> <span class="nav-text">减少上下文切换</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

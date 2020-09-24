@@ -249,7 +249,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/05/并发编程/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/24/重构[读书笔记]/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="PPCoder">
@@ -268,7 +268,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/09/05/并发编程/" itemprop="url">Untitled</a></h1>
+                <a class="post-title-link" href="/2020/09/24/重构[读书笔记]/" itemprop="url">Untitled</a></h1>
         
 
         <div class="post-meta">
@@ -280,8 +280,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-05T10:31:52+08:00">
-                2020-09-05
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-24T21:04:53+08:00">
+                2020-09-24
               </time>
             
 
@@ -319,46 +319,24 @@
 
       
         
-          <p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD<br>AQS</p>
-<p>数据安全问题：</p>
-<ol>
-<li>可见性</li>
-</ol>
-<p>JMM[Java内存模型] volitale synvhronize lock final</p>
-<ol start="2">
-<li>有序性</li>
-</ol>
-<p>指令重排序 volatile synchronized lock</p>
-<ol start="3">
-<li>原子性</li>
-</ol>
-<p>Lock</p>
-<ol>
-<li><p>互斥</p>
-</li>
-<li><p>保存等待序列</p>
-<p>存储序列的容器：List，Array，Map，Queue，链表</p>
-</li>
-<li><p>阻塞</p>
-<p>wait</p>
-<p>conditional：await</p>
-<p>LockSupport：park</p>
-</li>
-</ol>
-<p>UnLock</p>
-<ol>
-<li>释放</li>
-</ol>
-<ol start="2">
-<li><p>唤醒</p>
-<p>unpark</p>
-</li>
-</ol>
-<h2 id><a href="#" class="headerlink" title="======="></a>=======</h2><p>title: 并发编程初级<br>author: ppgoder</p>
-<h2 id="date-2020-09-02-16-12-22"><a href="#date-2020-09-02-16-12-22" class="headerlink" title="date: 2020-09-02 16:12:22"></a>date: 2020-09-02 16:12:22</h2>
+          
+          第一个案例
+
+去除临时变量
+
+重构手法：
+
+Extract Method
+Move Method
+Replace Conditional with Polymorphism
+Self Encapsulate Field
+Replace Type Code with State/Strategy
+
+哪
+          ...
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/09/05/并发编程/#more" rel="contents">
+            <a class="btn" href="/2020/09/24/重构[读书笔记]/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -485,6 +463,137 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2020/09/02/Kubernetes/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/09/02/并发编程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="PPCoder">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/author.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="皮仙儿的工作台">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/09/02/并发编程/" itemprop="url">并发编程初级</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-09-02T16:12:22+08:00">
+                2020-09-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          
+
+
+
+线程新建线程Tips：Run方法是Thread类用模板模式实现
+普通匿名内部类1234567//普通匿名内部类创建new Thread()&#123;    @Override    public void run() &#123;        enjoyMusic();    &#125
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/09/02/并发编程/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1136,8 +1245,7 @@ Git常用命令1234567891011git add . #添加所有文件git commit -m "" #提�
 定义：定义一系列的算法，把每个算法封装起来，并且使他们可相互替换
 方法：1. 抽象策略接口 2. 实现每个策略impl 3. 上转型应用策略
 
-模板模式线程创建的实现模式，抛出一个任务接口供你实现， 开始进行的start实现逻辑final不允许修改
-123456789101112131
+12345678910111213141516171819202122public interface RowHandler&lt;T&gt;
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1439,136 +1547,6 @@ protected：继承类可以访问
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/03/SpringCloud/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="PPCoder">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/author.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="皮仙儿的工作台">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/10/03/SpringCloud/" itemprop="url">微服务学习</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-03T13:45:51+08:00">
-                2019-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          
-
-微服务
-微服务架构是一种架构模式，它提倡将单一应用程序划分成一组小的服务，服务之间相互协调、互相配合，为用户提供最终价值。每个服务运行在其独立的进程中，服务和服务之间采用轻量级的通信机制相互沟通（通常是基于HTTP的Restful API).
-每个服务都围绕着具体的业务进行构建，并且能够被独立的
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2019/10/03/SpringCloud/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1621,7 +1599,7 @@ protected：继承类可以访问
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
